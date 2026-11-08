@@ -1,8 +1,7 @@
 "use client";
 
 import React from "react";
-import { SITE_CONTENT } from "@/content/site";
-import { ArrowUp, Heart } from "lucide-react";
+import { ArrowUp, Heart, Download } from "lucide-react";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -10,7 +9,7 @@ export default function Footer() {
   };
 
   return (
-    <footer className="relative pt-20 pb-12 overflow-hidden border-t border-black/[0.04]">
+    <footer className="relative pt-20 pb-28 sm:pb-24 overflow-hidden border-t border-black/[0.04] bg-[#FAF8F5]">
       <div className="max-w-7xl mx-auto px-6 lg:px-12 flex flex-col items-center">
         {/* Top row: links & scroll to top */}
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-6 pb-12 border-b border-black/[0.05]">
@@ -20,46 +19,59 @@ export default function Footer() {
             </div>
             <div>
               <p className="font-semibold text-sm text-[var(--ink)]">Laurentin</p>
-              <p className="text-xs text-[var(--ink-muted)]">Entrepreneur & Télépilote</p>
+              <p className="text-xs text-[var(--ink-muted)]">Télépilote DGAC &amp; SaaS Builder • Auch (32)</p>
             </div>
           </div>
 
           <div className="flex flex-wrap items-center justify-center gap-2">
-            {SITE_CONTENT.contact.socials.map((social) => (
-              <a
-                key={social.name}
-                href={social.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="px-4 py-1.5 rounded-full text-xs font-medium bg-white/70 backdrop-blur-md border border-white/80 text-[var(--ink)] hover:text-[#F43F6E] hover:border-[#F43F6E]/30 transition-all duration-200 shadow-sm"
-              >
-                {social.name}
-              </a>
-            ))}
+            <a
+              href="/cv.pdf"
+              download="CV-Laurentin.pdf"
+              className="px-4 py-1.5 rounded-full text-xs font-semibold bg-[#F43F6E]/10 text-[#F43F6E] border border-[#F43F6E]/20 hover:bg-[#F43F6E] hover:text-white transition-all shadow-xs flex items-center gap-1.5"
+            >
+              <Download className="w-3.5 h-3.5" />
+              <span>CV (PDF)</span>
+            </a>
+            <a
+              href="https://linkedin.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white/70 backdrop-blur-md border border-white/80 text-[var(--ink)] hover:text-[#F43F6E] transition-all duration-200 shadow-sm"
+            >
+              LinkedIn
+            </a>
+            <a
+              href="https://certidrone.fr"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-4 py-1.5 rounded-full text-xs font-medium bg-white/70 backdrop-blur-md border border-white/80 text-[var(--ink)] hover:text-[#F43F6E] transition-all duration-200 shadow-sm"
+            >
+              CertiDrone
+            </a>
           </div>
 
           <button
             type="button"
             onClick={scrollToTop}
-            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-white/80 border border-white/90 shadow-sm hover:bg-white text-[var(--ink)] hover:text-[#F43F6E] transition-all group"
+            className="flex items-center gap-2 px-4 py-2 rounded-full text-xs font-medium bg-white/80 border border-white/90 shadow-sm hover:bg-white text-[var(--ink)] hover:text-[#F43F6E] transition-all group cursor-pointer"
           >
             <span>Retour en haut</span>
             <ArrowUp className="w-3.5 h-3.5 transition-transform group-hover:-translate-y-0.5" />
           </button>
         </div>
 
-        {/* Giant Interactive Monogram / Name in Outline that fills on hover */}
+        {/* Giant Interactive Name in Outline that fills on hover */}
         <div className="w-full py-16 text-center select-none overflow-hidden">
           <h2 className="text-[17vw] leading-[0.85] font-black tracking-tighter text-outline hover:text-[#14141F] transition-all duration-700 cursor-default uppercase">
-            {SITE_CONTENT.footer.giantName}
+            LAURENTIN
           </h2>
         </div>
 
         {/* Bottom row: copyright */}
         <div className="w-full flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[var(--ink-muted)]">
-          <p>{SITE_CONTENT.footer.copyright}</p>
+          <p>© 2026 Laurentin. Tous droits réservés.</p>
           <p className="flex items-center gap-1.5">
-            <span>{SITE_CONTENT.footer.mentions}</span>
+            <span>Conçu avec passion entre ciel et code</span>
             <Heart className="w-3.5 h-3.5 text-[#F43F6E] fill-[#F43F6E]" />
           </p>
         </div>

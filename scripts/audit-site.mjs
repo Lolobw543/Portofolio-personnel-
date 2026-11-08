@@ -2,7 +2,7 @@ import { spawn } from "node:child_process";
 import fs from "node:fs";
 
 const chromePath = "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome";
-const auditDir = "/tmp/audit";
+const auditDir = "/tmp/audit-film";
 if (!fs.existsSync(auditDir)) fs.mkdirSync(auditDir, { recursive: true });
 
 async function run() {
@@ -14,14 +14,11 @@ async function run() {
     "about:blank",
   ]);
 
-  // Wait for Chrome to bind port
   await new Promise((r) => setTimeout(r, 1200));
 
   const versionRes = await fetch("http://127.0.0.1:9222/json/version");
   const versionData = await versionRes.json();
-  const browserWsUrl = versionData.webSocketDebuggerUrl;
 
-  // Open a new page target
   const newTargetRes = await fetch("http://127.0.0.1:9222/json/new?http://localhost:3000/?no-loader", { method: "PUT" });
   const targetData = await newTargetRes.json();
   const pageWsUrl = targetData.webSocketDebuggerUrl;
@@ -60,82 +57,47 @@ async function run() {
   await send("Runtime.enable");
   await send("DOM.enable");
 
-  // Wait for page load and fonts
   await new Promise((r) => setTimeout(r, 2000));
 
-  async function capture(filename, clip = null) {
-    const params = { format: "png" };
-    if (clip) params.clip = clip;
-    const res = await send("Page.captureScreenshot", params);
+  async function capture(filename) {
+    const res = await send("Page.captureScreenshot", { format: "png" });
     fs.writeFileSync(`${auditDir}/${filename}.png`, Buffer.from(res.data, "base64"));
     console.log(`Captured ${filename}.png`);
   }
 
-  // 1. Desktop Hero
-  await capture("01-hero");
+  async function scrollTo(id, delay = 800) {
+    await send("Runtime.evaluate", {
+      expression: `document.getElementById('${id}')?.scrollIntoView({ behavior: 'instant' });`,
+    });
+    await new Promise((r) => setTimeout(r, delay));
+  }
 
-  // Scroll to Arsenal
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('arsenal')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("02-arsenal");
+  // Desktop Acts 0 to 8
+  await capture("act0-ouverture");
 
-  // Scroll to Chapter AI
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('chapitre-01')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("03-chapter-ai");
+  await scrollTo("acte-01");
+  await capture("act1-ciel");
 
-  // Scroll to Chapter SaaS
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('chapitre-02')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("04-chapter-saas");
+  await scrollTo("acte-02");
+  await capture("act2-code");
 
-  // Scroll to Chapter Lunor
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('chapitre-03')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("05-chapter-lunor");
+  await scrollTo("acte-03");
+  await capture("act3-merge");
 
-  // Scroll to Chapter Drone
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('chapitre-04')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("06-chapter-drone");
+  await scrollTo("acte-04");
+  await capture("act4-construire");
 
-  // Scroll to Chapter Content
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('chapitre-05')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("07-chapter-content");
+  await scrollTo("acte-05");
+  await capture("act5-automatiser");
 
-  // Scroll to Bento Projects
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('realisations')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("08-bento-projects");
+  await scrollTo("arsenal");
+  await capture("act6-arsenal");
 
-  // Scroll to Method
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('methode')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("09-method");
+  await scrollTo("acte-07");
+  await capture("act7-preuves");
 
-  // Scroll to Contact
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('contact')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("10-contact");
+  await scrollTo("acte-08");
+  await capture("act8-suite");
 
   // Mobile test
   await send("Emulation.setDeviceMetricsOverride", {
@@ -144,23 +106,16 @@ async function run() {
     deviceScaleFactor: 2,
     mobile: true,
   });
-  await send("Runtime.evaluate", {
-    expression: "window.scrollTo(0, 0);",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("mobile-01-hero");
 
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('arsenal')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("mobile-02-arsenal");
+  await send("Runtime.evaluate", { expression: "window.scrollTo(0, 0);" });
+  await new Promise((r) => setTimeout(r, 600));
+  await capture("mobile-act0-ouverture");
 
-  await send("Runtime.evaluate", {
-    expression: "document.getElementById('chapitre-01')?.scrollIntoView({ behavior: 'instant' });",
-  });
-  await new Promise((r) => setTimeout(r, 800));
-  await capture("mobile-03-chapter-ai");
+  await scrollTo("acte-03");
+  await capture("mobile-act3-merge");
+
+  await scrollTo("acte-04");
+  await capture("mobile-act4-construire");
 
   ws.close();
   chrome.kill();
