@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="1000" viewBox="0 0 800 1000">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B1B4B" />
+      <stop offset="50%" stop-color="#2D2054" />
+      <stop offset="100%" stop-color="#14141F" />
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="40%" r="50%">
+      <stop offset="0%" stop-color="#F43F6E" stop-opacity="0.4" />
+      <stop offset="100%" stop-color="#F43F6E" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <rect width="800" height="1000" fill="url(#bg)" />
+  <circle cx="400" cy="400" r="300" fill="url(#glow)" />
+  
+  <!-- Silhouette / Stylized Avatar -->
+  <g fill="#FAF8F5" opacity="0.9">
+    <circle cx="400" cy="350" r="140" fill="#FAF8F5" opacity="0.15" />
+    <circle cx="400" cy="350" r="110" fill="#FAF8F5" opacity="0.25" />
+    <path d="M220 850 C240 600, 560 600, 580 850 Z" fill="#FAF8F5" opacity="0.18" />
+    
+    <!-- Drone Icon in center -->
+    <path d="M370 330 H430 M400 300 V360" stroke="#F43F6E" stroke-width="4" stroke-linecap="round"/>
+    <circle cx="360" cy="300" r="16" fill="none" stroke="#FAF8F5" stroke-width="3"/>
+    <circle cx="440" cy="300" r="16" fill="none" stroke="#FAF8F5" stroke-width="3"/>
+    <circle cx="360" cy="360" r="16" fill="none" stroke="#FAF8F5" stroke-width="3"/>
+    <circle cx="440" cy="360" r="16" fill="none" stroke="#FAF8F5" stroke-width="3"/>
+  </g>
+  
+  <rect x="240" y="880" width="320" height="48" rx="24" fill="#FAF8F5" fill-opacity="0.1" stroke="#FAF8F5" stroke-width="1.5" stroke-opacity="0.2"/>
+  <text x="400" y="911" fill="#FAF8F5" font-family="system-ui, sans-serif" font-size="18" font-weight="600" text-anchor="middle" letter-spacing="1">[PHOTO DE LAURENTIN]</text>
+  <text x="400" y="960" fill="#FAF8F5" opacity="0.5" font-family="system-ui, sans-serif" font-size="14" text-anchor="middle">Remplacer dans /public/me.jpg</text>
+</svg>
