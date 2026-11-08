@@ -19,7 +19,7 @@ export default function ProjectsBento() {
         <SectionBadge label="Réalisations & Projets" icon={FolderGit2} />
 
         <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light tracking-tight text-[var(--ink)] mt-4">
-          Ce que j&apos;ai <HighlightText>conçu et mis en production</HighlightText>
+          Ce que j&apos;ai <HighlightText>construit</HighlightText>
         </h2>
 
         <p className="text-sm sm:text-base text-[var(--ink-muted)] max-w-xl mt-4 font-normal">
@@ -162,26 +162,33 @@ function BentoCard({
         </div>
 
         {/* Metrics Grid */}
-        <div
-          className={`grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t ${
-            isNavy ? "border-white/10" : "border-black/[0.06]"
-          }`}
-        >
-          {project.metrics.map((m, idx) => (
-            <div key={idx} className="flex flex-col">
-              <span className="text-[10px] uppercase tracking-wider text-[var(--ink-muted)]">
-                {m.label}
-              </span>
-              <span
-                className={`text-xs font-semibold mt-0.5 ${
-                  isNavy ? "text-white" : "text-[var(--ink)]"
-                }`}
-              >
-                {m.value}
-              </span>
+        {(() => {
+          const showDrafts = process.env.NEXT_PUBLIC_SHOW_DRAFTS === "true" || process.env.NEXT_PUBLIC_SHOW_PLACEHOLDERS === "true";
+          const displayMetrics = showDrafts ? project.metrics : project.metrics.filter((m) => !m.value.startsWith("["));
+          if (displayMetrics.length === 0) return null;
+          return (
+            <div
+              className={`grid grid-cols-2 sm:grid-cols-3 gap-3 pt-4 border-t ${
+                isNavy ? "border-white/10" : "border-black/[0.06]"
+              }`}
+            >
+              {displayMetrics.map((m, idx) => (
+                <div key={idx} className="flex flex-col">
+                  <span className="text-[10px] uppercase tracking-wider text-[var(--ink-muted)]">
+                    {m.label}
+                  </span>
+                  <span
+                    className={`text-xs font-semibold mt-0.5 ${
+                      isNavy ? "text-white" : "text-[var(--ink)]"
+                    }`}
+                  >
+                    {m.value}
+                  </span>
+                </div>
+              ))}
             </div>
-          ))}
-        </div>
+          );
+        })()}
       </div>
     </motion.div>
   );
@@ -279,14 +286,21 @@ function ProjectDetailModal({
           </div>
 
           {/* Résultats & Chiffres */}
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#FAF8F5] border border-black/[0.05]">
-            {project.metrics.map((m, idx) => (
-              <div key={idx} className="flex flex-col">
-                <span className="text-[11px] text-[var(--ink-muted)]">{m.label}</span>
-                <span className="text-sm font-semibold text-[var(--ink)] mt-0.5">{m.value}</span>
+          {(() => {
+            const showDrafts = process.env.NEXT_PUBLIC_SHOW_DRAFTS === "true" || process.env.NEXT_PUBLIC_SHOW_PLACEHOLDERS === "true";
+            const displayMetrics = showDrafts ? project.metrics : project.metrics.filter((m) => !m.value.startsWith("["));
+            if (displayMetrics.length === 0) return null;
+            return (
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-[#FAF8F5] border border-black/[0.05]">
+                {displayMetrics.map((m, idx) => (
+                  <div key={idx} className="flex flex-col">
+                    <span className="text-[11px] text-[var(--ink-muted)]">{m.label}</span>
+                    <span className="text-sm font-semibold text-[var(--ink)] mt-0.5">{m.value}</span>
+                  </div>
+                ))}
               </div>
-            ))}
-          </div>
+            );
+          })()}
 
           {/* Actions */}
           <div className="flex items-center justify-between pt-4 border-t border-black/[0.06]">

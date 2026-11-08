@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "Laurentin",
     "Télépilote Drone",
     "SaaS",
-    "CertiDron",
+    "CertiDrone",
     "Automatisation IA",
     "n8n",
     "Make",

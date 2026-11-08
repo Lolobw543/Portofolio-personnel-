@@ -225,7 +225,7 @@ export const SITE_CONTENT = {
       ],
       workflowDemo: {
         realMedia: null as string | null, // Si renseigné (ex. "/videos/mon-vrai-workflow.mp4" ou "/images/mon-workflow.webp"), s'affiche à la place
-        disclaimer: "Exemple illustratif • Pipeline réel déployé avec n8n & Claude 3.5 Sonnet",
+        disclaimer: "Exemple illustratif • Pipeline réel déployé avec n8n & Claude",
         note: {
           appTitle: "Notes",
           folder: "Vidéos & Drones",
@@ -248,7 +248,7 @@ export const SITE_CONTENT = {
           },
           llmNode: {
             id: "claude",
-            name: "Claude 3.5 Sonnet",
+            name: "Claude",
             sublabel: "Structuration & 4 angles",
             logo: "claude",
             duration: "0.9s",
@@ -292,7 +292,7 @@ export const SITE_CONTENT = {
           ],
           logs: [
             "✓ 09:41:02 • Déclencheur reçu via Webhook Mobile",
-            "✓ 09:41:03 • Structuration & 4 angles éditoriaux générés par Claude 3.5",
+            "✓ 09:41:03 • Structuration & 4 angles éditoriaux générés par Claude",
             "✓ 09:41:04 • Visuels & formats verticaux 9:16 générés et vérifiés",
             "✓ 09:41:05 • 4 publications programmées et synchronisées avec succès",
           ],
@@ -339,7 +339,7 @@ export const SITE_CONTENT = {
             network: "X (Twitter)",
             badge: "Thread",
             publishedTime: "1 min",
-            text: "Vol drone terminé à 09:30.\nRapport d'analyse foliaire IA envoyé à l'exploitant à 09:42.\n\nZéro saisie manuelle. 100% automatisé avec n8n et Claude 3.5 Sonnet. 🧵👇",
+            text: "Vol drone terminé à 09:30.\nRapport d'analyse foliaire IA envoyé à l'exploitant à 09:42.\n\nZéro saisie manuelle. 100% automatisé avec n8n et Claude. 🧵👇",
             image: "/images/ai/post-x.webp",
             retweets: "38",
             quotes: "9",
@@ -364,7 +364,7 @@ export const SITE_CONTENT = {
       title: "SaaS & Développement Assisté par IA",
       highlightWords: ["SaaS", "Développement"],
       tagline: "Projet phare : CertiDrone, copilote IA des télépilotes professionnels.",
-      statusMetric: "[À REMPLACER: Statut SaaS]",
+      statusMetric: "En cours de lancement",
       complianceMetric: "[À REMPLACER: Temps de conformité divisé par 4]",
       description: [
         "Le 'vibe coding' poussé à son paroxysme : concevoir des applications web et logicielles complètes en quelques jours plutôt qu'en plusieurs mois.",
@@ -492,7 +492,7 @@ export const SITE_CONTENT = {
       metrics: [
         { label: "Temps gagné", value: "[À REMPLACER: 85%]" },
         { label: "Conformité", value: "[À REMPLACER: 100% DGAC]" },
-        { label: "Statut", value: "[À REMPLACER: Live SaaS]" },
+        { label: "Statut", value: "En cours de lancement" },
       ],
       tags: ["SaaS", "IA Copilot", "Next.js", "Aviation DGAC"],
       demoUrl: "https://certidrone.fr",
@@ -531,10 +531,10 @@ export const SITE_CONTENT = {
       span: "col-span-1",
       summary: "Workflow n8n / Make qui transforme un sujet d'actualité ou une note brute en 4 formats de publication calibrés (LinkedIn, X, TikTok, Instagram).",
       context: "Éliminer le travail manuel de copywriting et de redimensionnement de contenu pour maintenir une présence active et consistante 7j/7.",
-      toolsUsed: ["n8n", "Claude 3.5 Sonnet", "Airtable", "Webhooks", "Canva API"],
+      toolsUsed: ["n8n", "Claude", "Airtable", "Webhooks", "Canva API"],
       metrics: [
         { label: "Publications", value: "[À REMPLACER: +150/mois]" },
-        { label: "Temps humain", value: "0 clic requis" },
+        { label: "Temps humain", value: "[À REMPLACER: 0 clic requis]" },
       ],
       tags: ["n8n", "Make", "IA Générative", "Social Media"],
       demoUrl: "#contact",
@@ -722,11 +722,12 @@ export const SITE_CONTENT = {
     ],
     availabilityNote: "Disponible pour missions ponctuelles & collaborations stratégiques",
     location: "France • Déplacements possibles & Remote",
+    cvUrl: process.env.NEXT_PUBLIC_CV_URL || "",
   },
 
   footer: {
     giantName: "LAURENTIN",
-    copyright: `© ${new Date().getFullYear()} Laurentin. Tous droits réservés.`,
+    copyright: "© 2026 Laurentin. Tous droits réservés.",
     mentions: "Conçu avec passion, codé au millimètre.",
   },
 };

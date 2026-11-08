@@ -17,6 +17,7 @@ import {
   Mail,
   MapPin,
   Clock,
+  FileDown,
 } from "lucide-react";
 
 export default function Contact() {
@@ -129,6 +130,21 @@ export default function Contact() {
                   </a>
                 ))}
               </div>
+
+              {/* CV Download button if provided */}
+              {contact.cvUrl && (
+                <div className="pt-2">
+                  <a
+                    href={contact.cvUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-white text-[#1B1B4B] hover:bg-white/90 shadow-md transition-all"
+                  >
+                    <FileDown className="w-4 h-4 text-[#F43F6E]" />
+                    <span>Télécharger mon CV (PDF)</span>
+                  </a>
+                </div>
+              )}
             </div>
 
             {/* Right Column: Contact Form */}
@@ -271,7 +287,7 @@ function ServiceCard({ service, icon }: { service: ServiceItem; icon: React.Reac
           href="#contact"
           className="text-xs font-semibold text-[#F43F6E] hover:underline"
         >
-          Commander
+          En discuter
         </a>
       </div>
     </div>

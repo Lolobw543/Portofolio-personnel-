@@ -48,13 +48,17 @@ export default function ChapterContent() {
             {data.number}
           </span>
           <SectionBadge label={data.badge} icon={Video} />
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 flex items-center gap-1.5">
-            <Flame className="w-3.5 h-3.5" />
-            <span>{data.viewsMetric}</span>
-          </span>
-          <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-800">
-            {data.retentionMetric}
-          </span>
+          {data.viewsMetric && !data.viewsMetric.startsWith("[") && (
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700 flex items-center gap-1.5">
+              <Flame className="w-3.5 h-3.5" />
+              <span>{data.viewsMetric}</span>
+            </span>
+          )}
+          {data.retentionMetric && !data.retentionMetric.startsWith("[") && (
+            <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-800">
+              {data.retentionMetric}
+            </span>
+          )}
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-[var(--ink)] max-w-4xl leading-[1.1]">

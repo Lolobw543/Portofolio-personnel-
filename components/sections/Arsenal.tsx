@@ -231,7 +231,7 @@ function ArsenalTile({ tool }: { tool: ToolItem }) {
       </div>
 
       {/* Internal Interactive Element: zooms 1.2 on hover without altering outer hit zone */}
-      <div className="w-full h-full p-4 sm:p-5 rounded-[28px] glass-card flex flex-col items-center justify-between transition-transform duration-300 ease-out group-hover:scale-120 group-hover:shadow-[0_22px_55px_rgba(244,63,110,0.3)] group-hover:bg-white group-hover:border-[#F43F6E]/40 pointer-events-none select-none">
+      <div className="w-full h-full p-4 sm:p-5 rounded-[28px] glass-card flex flex-col items-center justify-between transition-transform duration-300 ease-out group-hover:scale-[1.12] group-hover:shadow-[0_22px_55px_rgba(244,63,110,0.3)] group-hover:bg-white group-hover:border-[#F43F6E]/40 pointer-events-none select-none">
         {/* Real Logo in Vibrant Color permanently */}
         <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.03]">
           <ToolLogo id={tool.id} name={tool.name} size={48} />

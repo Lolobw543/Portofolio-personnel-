@@ -115,7 +115,7 @@ export default function Hero() {
             <span className="w-1 h-1 rounded-full bg-black/20" />
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
-              <span>Dispo immédiate</span>
+              <span>Basé à Auch (32)</span>
             </div>
           </div>
         </div>
@@ -218,10 +218,10 @@ export default function Hero() {
               <span>Créateur de SaaS</span>
             </motion.div>
 
-            {/* Badge 3: Bottom Left */}
+            {/* Badge 3: Left Lower (Positioned at top-[62%] to never overlap the bottom Laurentin tag) */}
             <motion.div
               animate={{
-                y: [0, -10, 0],
+                y: [0, -8, 0],
                 rotate: [-1.5, 1, -1.5],
               }}
               transition={{
@@ -230,7 +230,7 @@ export default function Hero() {
                 ease: "easeInOut",
                 delay: 1,
               }}
-              className="absolute -bottom-4 -left-3 sm:-left-6 z-20 px-3.5 py-2 rounded-2xl glass-card text-xs font-semibold text-[var(--ink)] flex items-center gap-2 shadow-lg select-none"
+              className="absolute top-[62%] -left-4 sm:-left-8 z-20 px-3.5 py-2 rounded-2xl glass-card text-xs font-semibold text-[var(--ink)] flex items-center gap-2 shadow-lg select-none"
             >
               <div className="w-6 h-6 rounded-full bg-[#EDE9FE] flex items-center justify-center">
                 {iconMap.sparkles}

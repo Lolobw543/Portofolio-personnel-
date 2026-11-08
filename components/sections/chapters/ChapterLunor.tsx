@@ -45,12 +45,16 @@ export default function ChapterLunor() {
             {data.number}
           </span>
           <SectionBadge label={data.badge} icon={ShoppingBag} />
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-800">
-            {data.revenueMetric}
-          </span>
-          <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700">
-            {data.conversionMetric}
-          </span>
+          {data.revenueMetric && !data.revenueMetric.startsWith("[") && (
+            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-800">
+              {data.revenueMetric}
+            </span>
+          )}
+          {data.conversionMetric && !data.conversionMetric.startsWith("[") && (
+            <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-rose-500/10 text-rose-700">
+              {data.conversionMetric}
+            </span>
+          )}
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-[var(--ink)] max-w-4xl leading-[1.1]">

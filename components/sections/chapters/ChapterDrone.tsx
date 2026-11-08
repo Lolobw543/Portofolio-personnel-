@@ -25,6 +25,8 @@ export default function ChapterDrone() {
 
   // Dynamic HUD telemetry values driven by scroll
   const altitudeValue = useTransform(scrollYProgress, [0.2, 0.6], [85, 120]);
+  const batteryValue = useTransform(scrollYProgress, [0.1, 0.9], [96, 78]);
+  const timecodeValue = useTransform(scrollYProgress, [0.1, 0.9], [14, 58]);
 
   return (
     <div
@@ -51,9 +53,11 @@ export default function ChapterDrone() {
             <ShieldCheck className="w-3.5 h-3.5" />
             <span>{data.certification}</span>
           </span>
-          <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-800">
-            {data.hoursMetric}
-          </span>
+          {data.hoursMetric && !data.hoursMetric.startsWith("[") && (
+            <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/10 text-blue-800">
+              {data.hoursMetric}
+            </span>
+          )}
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-[var(--ink)] max-w-4xl leading-[1.1]">
@@ -97,11 +101,11 @@ export default function ChapterDrone() {
               <div className="flex items-center gap-3 bg-black/40 backdrop-blur-md px-3.5 py-1.5 rounded-full border border-white/10">
                 <span className="w-2.5 h-2.5 rounded-full bg-rose-500 animate-pulse" />
                 <span className="font-bold tracking-widest text-[11px] text-rose-400">REC [4K 60FPS]</span>
-                <span className="text-white/60">00:14:32</span>
+                <TimecodeDisplay value={timecodeValue} />
               </div>
 
               <div className="flex items-center gap-4 bg-black/40 backdrop-blur-md px-4 py-1.5 rounded-full border border-white/10">
-                <span>{data.hud.battery}</span>
+                <BatteryDisplay value={batteryValue} />
                 <span>•</span>
                 <span>ISO 100</span>
                 <span>•</span>
@@ -146,7 +150,7 @@ export default function ChapterDrone() {
               href="#contact"
               className="inline-flex items-center gap-1.5 text-xs font-semibold text-[#F43F6E] hover:underline"
             >
-              <span>Réserver une captation</span>
+              <span>Discuter d&apos;un projet</span>
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
@@ -205,4 +209,17 @@ function AltitudeDisplay({ value }: { value: MotionValue<number> }) {
   const [alt, setAlt] = useState(85);
   useMotionValueEvent(value, "change", (latest) => setAlt(Math.round(latest)));
   return <span>ALT: {alt}m AGL</span>;
+}
+
+function BatteryDisplay({ value }: { value: MotionValue<number> }) {
+  const [bat, setBat] = useState(94);
+  useMotionValueEvent(value, "change", (latest) => setBat(Math.round(latest)));
+  return <span>BAT: {bat}%</span>;
+}
+
+function TimecodeDisplay({ value }: { value: MotionValue<number> }) {
+  const [sec, setSec] = useState(14);
+  useMotionValueEvent(value, "change", (latest) => setSec(Math.round(latest)));
+  const formattedSec = sec < 10 ? `0${sec}` : `${sec}`;
+  return <span className="text-white/60">00:14:{formattedSec}</span>;
 }

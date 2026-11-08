@@ -62,14 +62,15 @@ export default function ChapterSaaS() {
           <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#3B82F6]/10 text-[#2563EB]">
             {data.statusMetric}
           </span>
-          <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700">
-            {data.complianceMetric}
-          </span>
+          {data.complianceMetric && !data.complianceMetric.startsWith("[") && (
+            <span className="hidden sm:inline-block px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-700">
+              {data.complianceMetric}
+            </span>
+          )}
         </div>
 
         <h2 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light tracking-tight text-[var(--ink)] max-w-4xl leading-[1.1]">
-          {data.title.split("&")[0]} &{" "}
-          <HighlightText color="bg-[#DBEAFE]">{data.title.split("&")[1]?.trim()}</HighlightText>
+          <HighlightText color="#DBEAFE">SaaS</HighlightText> &amp; Développement assisté par l&apos;IA
         </h2>
 
         <p className="text-base sm:text-lg text-[var(--ink-muted)] max-w-2xl mt-4 font-normal">
@@ -92,8 +93,8 @@ export default function ChapterSaaS() {
           ))}
         </div>
 
-        {/* 3D Dashboard Mockup with Detached Depth Layers */}
-        <div className="relative my-20 perspective-[1400px]">
+        {/* 3D Dashboard Mockup — Clean & Unobstructed */}
+        <div className="relative my-14 perspective-[1400px]">
           {/* Main Dashboard Frame */}
           <motion.div
             style={{
@@ -103,8 +104,7 @@ export default function ChapterSaaS() {
             }}
             className="relative w-full rounded-[36px] overflow-hidden bg-[#1B1B4B] p-4 sm:p-6 shadow-[0_30px_90px_rgba(27,27,75,0.4)] border border-white/10"
           >
-            <PlaceholderBadge />
-            <div className="relative aspect-[16/10] w-full rounded-[24px] overflow-hidden bg-[#FAFAFA]">
+            <div className="relative aspect-[16/10] w-full rounded-[24px] overflow-hidden bg-[#FAFAFA] shadow-inner">
               <Image
                 src={data.images.dashboard}
                 alt="Plateforme CertiDrone SaaS"
@@ -119,12 +119,15 @@ export default function ChapterSaaS() {
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
                 <span className="font-medium">CertiDrone • Copilote IA de préparation pour télépilotes</span>
+                <span className="px-2.5 py-0.5 rounded-full bg-white/10 text-emerald-400 font-mono text-[10px]">
+                  En cours de lancement
+                </span>
               </div>
               <a
                 href="https://certidrone.fr"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F43F6E] text-white font-semibold hover:bg-[#e11d48] transition-colors"
+                className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F43F6E] text-white font-semibold hover:bg-[#e11d48] transition-colors shadow-md"
               >
                 <span>Accéder à certidrone.fr</span>
                 <ExternalLink className="w-3.5 h-3.5" />
@@ -132,69 +135,58 @@ export default function ChapterSaaS() {
             </div>
           </motion.div>
 
-          {/* Detached Depth Floating Panel 1: Flight Plan (Left Overlap) */}
-          <motion.div
-            style={{
-              x: panel1X,
-              y: panel1Y,
-            }}
-            className="hidden md:flex absolute -bottom-10 -left-6 z-20 w-80 rounded-2xl p-4 bg-white/95 backdrop-blur-xl border border-white/80 shadow-2xl flex-col gap-3"
-          >
-            <PlaceholderBadge />
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-xs font-semibold text-[var(--ink)]">
-                <Compass className="w-4 h-4 text-[#3B82F6]" />
-                <span>Plan de Vol IA</span>
-              </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold">
-                Optimisé S1/S2/S3
-              </span>
+          {/* Two Complementary Feature Panels in Clean Grid Below (No Overlap) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+            {/* Panel 1: Flight Plan */}
+            <div className="rounded-3xl p-5 bg-white/95 backdrop-blur-xl border border-white/90 shadow-xl flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 text-xs font-semibold text-[var(--ink)]">
+                  <Compass className="w-4 h-4 text-[#3B82F6]" />
+                  <span>Plan de Vol IA</span>
+                </span>
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold">
+                  Optimisé S1/S2/S3
+                </span>
+              </div>
+              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-900">
+                <Image
+                  src={data.panels[0].image}
+                  alt="Plan de vol IA optimisé"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 550px"
+                />
+              </div>
+              <p className="text-xs text-[var(--ink-muted)] leading-relaxed">
+                Calcul autonome des trajectoires photogrammétriques, évitement des zones réglementaires LF-R et hauteurs max.
+              </p>
             </div>
-            <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-900">
-              <Image
-                src={data.panels[0].image}
-                alt="Plan de vol IA"
-                fill
-                className="object-cover"
-                sizes="320px"
-              />
-            </div>
-            <p className="text-[11px] text-[var(--ink-muted)]">
-              Trajectoire générée et calculée en conformité avec les zones LF-R et hauteurs max.
-            </p>
-          </motion.div>
 
-          {/* Detached Depth Floating Panel 2: Live Weather & Airspace (Right Overlap) */}
-          <motion.div
-            style={{
-              x: panel2X,
-              y: panel2Y,
-            }}
-            className="hidden md:flex absolute -top-8 -right-6 z-20 w-80 rounded-2xl p-4 bg-white/95 backdrop-blur-xl border border-white/80 shadow-2xl flex-col gap-3"
-          >
-            <PlaceholderBadge />
-            <div className="flex items-center justify-between">
-              <span className="flex items-center gap-2 text-xs font-semibold text-[var(--ink)]">
-                <CloudSun className="w-4 h-4 text-[#F59E0B]" />
-                <span>Météo Aéronautique</span>
-              </span>
-              <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">
-                METAR / TAF
-              </span>
+            {/* Panel 2: Live Weather & Airspace */}
+            <div className="rounded-3xl p-5 bg-white/95 backdrop-blur-xl border border-white/90 shadow-xl flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="flex items-center gap-2 text-xs font-semibold text-[var(--ink)]">
+                  <CloudSun className="w-4 h-4 text-[#F59E0B]" />
+                  <span>Météo Aéronautique &amp; Espace Aérien</span>
+                </span>
+                <span className="text-[10px] px-2.5 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold">
+                  METAR / TAF
+                </span>
+              </div>
+              <div className="relative aspect-[16/10] w-full rounded-2xl overflow-hidden bg-slate-900">
+                <Image
+                  src={data.panels[1].image}
+                  alt="Météo et espace aérien en direct"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 768px) 100vw, 550px"
+                />
+              </div>
+              <p className="text-xs text-[var(--ink-muted)] leading-relaxed">
+                Analyse du vent en altitude à 120m AGL, indice géomagnétique Kp pour le GPS RTK et validation de la fenêtre de vol.
+              </p>
             </div>
-            <div className="relative aspect-[4/3] w-full rounded-xl overflow-hidden bg-slate-900">
-              <Image
-                src={data.panels[1].image}
-                alt="Météo et espace aérien"
-                fill
-                className="object-cover"
-                sizes="320px"
-              />
-            </div>
-            <p className="text-[11px] text-[var(--ink-muted)]">
-              Analyse du vent en altitude, indice KP et prédictions de turbulences en direct.
-            </p>
-          </motion.div>
+          </div>
         </div>
 
         {/* Narrative bullet points directly on background */}
