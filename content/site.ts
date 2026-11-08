@@ -116,9 +116,9 @@ export const SITE_CONTENT = {
       { label: "Workflows IA & n8n", icon: "sparkles", delay: 0.3 },
       { label: "E-commerce & Branding", icon: "shopping-bag", delay: 0.45 },
     ],
-    photoPlaceholder: "/me.jpg",
+    photoPlaceholder: "/me-cutout.webp",
     photoAlt: "Laurentin — Télépilote de drone et créateur de SaaS",
-    placeholder: true,
+    placeholder: false,
   },
 
   manifesto: {

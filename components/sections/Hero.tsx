@@ -137,26 +137,43 @@ export default function Hero() {
               className="w-full h-full rounded-[32px] p-2.5 glass-card relative overflow-hidden group shadow-[0_25px_60px_-15px_rgba(20,20,31,0.12)] transition-shadow duration-500 hover:shadow-[0_35px_80px_-15px_rgba(244,63,110,0.2)]"
             >
               {/* Inner card frame */}
-              <div className="w-full h-full rounded-[24px] overflow-hidden relative bg-[#1B1B4B]">
-                <PlaceholderBadge />
-                <Image
-                  src={SITE_CONTENT.hero.photoPlaceholder}
-                  alt={SITE_CONTENT.hero.photoAlt}
-                  fill
-                  priority
-                  className="object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out"
-                />
+              <div className="w-full h-full rounded-[24px] overflow-hidden relative bg-gradient-to-b from-[#1C1F2E] via-[#141622] to-[#0D0E16]">
+                {/* Studio Ambient Backlight behind Laurentin */}
+                <div className="absolute top-[28%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-[350px] h-[350px] rounded-full bg-gradient-to-tr from-[#F43F6E]/40 via-[#8B5CF6]/25 to-[#38BDF8]/30 blur-3xl pointer-events-none" />
+                
+                {/* Subtle tech micro-grid */}
+                <div className="absolute inset-0 bg-[radial-gradient(rgba(255,255,255,0.06)_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none opacity-60" />
 
-                {/* Subtle gradient vignette */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#14141F]/80 via-transparent to-transparent pointer-events-none" />
+                {/* Laurentin Cutout Portrait in 3D depth */}
+                <div
+                  className="absolute inset-x-0 bottom-0 top-0 flex items-end justify-center pointer-events-none overflow-hidden"
+                  style={{ transform: "translateZ(30px)" }}
+                >
+                  <div className="relative w-full h-full flex items-end justify-center">
+                    <Image
+                      src="/me-cutout.webp"
+                      alt={SITE_CONTENT.hero.photoAlt}
+                      width={486}
+                      height={913}
+                      priority
+                      className="w-auto h-[100%] max-h-none object-contain object-bottom drop-shadow-[0_20px_35px_rgba(0,0,0,0.65)] group-hover:scale-[1.03] transition-transform duration-700 ease-out"
+                    />
+                  </div>
+                </div>
+
+                {/* Subtle vignette fade at the very bottom edge */}
+                <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0D0E16]/85 via-[#0D0E16]/30 to-transparent pointer-events-none z-20" />
 
                 {/* Bottom card tag */}
-                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white/90 text-xs px-3 py-2 rounded-xl bg-black/30 backdrop-blur-md border border-white/10">
+                <div
+                  className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-white text-xs px-3.5 py-2.5 rounded-2xl bg-white/10 backdrop-blur-md border border-white/15 shadow-lg z-30"
+                  style={{ transform: "translateZ(45px)" }}
+                >
                   <div className="flex items-center gap-2">
                     <span className="w-2 h-2 rounded-full bg-[#10B981] animate-ping" />
-                    <span className="font-medium tracking-wide">Laurentin</span>
+                    <span className="font-semibold tracking-wide">Laurentin</span>
                   </div>
-                  <span className="text-[11px] text-white/60">Paris / France</span>
+                  <span className="text-[11px] text-white/70 font-medium">Auch (32) • France</span>
                 </div>
               </div>
             </motion.div>
