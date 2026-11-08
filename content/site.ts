@@ -363,12 +363,12 @@ export const SITE_CONTENT = {
       badge: "SaaS & Build",
       title: "SaaS & Développement Assisté par IA",
       highlightWords: ["SaaS", "Développement"],
-      tagline: "Projet phare : CertiDron, copilote IA des télépilotes professionnels.",
+      tagline: "Projet phare : CertiDrone, copilote IA des télépilotes professionnels.",
       statusMetric: "[À REMPLACER: Statut SaaS]",
       complianceMetric: "[À REMPLACER: Temps de conformité divisé par 4]",
       description: [
         "Le 'vibe coding' poussé à son paroxysme : concevoir des applications web et logicielles complètes en quelques jours plutôt qu'en plusieurs mois.",
-        "Projet phare : CertiDron, une solution SaaS conçue pour les télépilotes, automatisant la préparation de mission, la conformité réglementaire DGAC et les déclarations de vol grâce à l'IA.",
+        "Projet phare : CertiDrone, une solution SaaS conçue pour les télépilotes, automatisant la préparation de mission, la conformité réglementaire DGAC et les déclarations de vol grâce à l'IA.",
         "Développement full-stack moderne : Next.js App Router, bases Supabase, auth sécurisée et intégration Stripe pour les abonnements.",
         "Conception orientée rentabilité et time-to-market immédiat.",
       ],
@@ -479,7 +479,7 @@ export const SITE_CONTENT = {
   projects: [
     {
       id: "certidron",
-      title: "CertiDron",
+      title: "CertiDrone",
       subtitle: "Plateforme SaaS IA pour télépilotes de drones",
       category: "SaaS & IA",
       badge: "Projet Phare",
@@ -487,7 +487,7 @@ export const SITE_CONTENT = {
       theme: "navy",
       span: "md:col-span-2",
       summary: "Automatisation complète des démarches réglementaires, dossiers de vol et vérifications météo/espace aérien pour les pilotes professionnels.",
-      context: "La réglementation des vols de drone est chronophage et complexe. CertiDron simplifie la préparation en générant les documents de vol conformes DGAC en quelques secondes grâce à l'IA.",
+      context: "La réglementation des vols de drone est chronophage et complexe. CertiDrone simplifie la préparation en générant les documents de vol conformes DGAC en quelques secondes grâce à l'IA.",
       toolsUsed: ["Next.js", "TypeScript", "Tailwind", "Supabase", "OpenAI API", "Stripe"],
       metrics: [
         { label: "Temps gagné", value: "[À REMPLACER: 85%]" },
@@ -495,7 +495,7 @@ export const SITE_CONTENT = {
         { label: "Statut", value: "[À REMPLACER: Live SaaS]" },
       ],
       tags: ["SaaS", "IA Copilot", "Next.js", "Aviation DGAC"],
-      demoUrl: "https://certidron.fr",
+      demoUrl: "https://certidrone.fr",
       coverImage: "/images/projects/certidron-cover.webp",
       placeholder: true,
     },
@@ -623,7 +623,7 @@ export const SITE_CONTENT = {
         numberValue: 4,
         suffix: "",
         label: "SaaS & logiciels développés",
-        description: "Dont CertiDron, copilote IA pour télépilotes",
+        description: "Dont CertiDrone, copilote IA pour télépilotes",
         highlight: true,
       },
       {

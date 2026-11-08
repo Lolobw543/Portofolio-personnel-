@@ -49,7 +49,7 @@ export default function ChapterSaaS() {
         style={{ x: ghostX }}
         className="absolute top-10 right-0 pointer-events-none select-none text-[15vw] font-black uppercase text-outline opacity-20 leading-none whitespace-nowrap z-0"
       >
-        SAAS • VIBE CODING • CERTIDRON
+        SAAS • VIBE CODING • CERTIDRONE
       </motion.div>
 
       <div className="max-w-7xl mx-auto px-6 w-full relative z-10">
@@ -104,12 +104,12 @@ export default function ChapterSaaS() {
             className="relative w-full rounded-[36px] overflow-hidden bg-[#1B1B4B] p-4 sm:p-6 shadow-[0_30px_90px_rgba(27,27,75,0.4)] border border-white/10"
           >
             <PlaceholderBadge />
-            <div className="relative aspect-[16/10] w-full rounded-[24px] overflow-hidden">
+            <div className="relative aspect-[16/10] w-full rounded-[24px] overflow-hidden bg-[#FAFAFA]">
               <Image
                 src={data.images.dashboard}
-                alt="Dashboard CertiDron SaaS"
+                alt="Plateforme CertiDrone SaaS"
                 fill
-                className="object-cover"
+                className="object-cover object-top"
                 sizes="(max-width: 1280px) 100vw, 1200px"
               />
             </div>
@@ -118,15 +118,15 @@ export default function ChapterSaaS() {
             <div className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 mt-2 border-t border-white/10 text-white text-xs">
               <div className="flex items-center gap-3">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="font-medium">CertiDron v2.4 • Copilote IA pour Télépilotes</span>
+                <span className="font-medium">CertiDrone • Copilote IA de préparation pour télépilotes</span>
               </div>
               <a
-                href="https://certidron.fr"
+                href="https://certidrone.fr"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1.5 px-4 py-1.5 rounded-full bg-[#F43F6E] text-white font-semibold hover:bg-[#e11d48] transition-colors"
               >
-                <span>Accéder à certidron.fr</span>
+                <span>Accéder à certidrone.fr</span>
                 <ExternalLink className="w-3.5 h-3.5" />
               </a>
             </div>
