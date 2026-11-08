@@ -119,35 +119,35 @@ export default function Arsenal() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5 }}
-            className="w-full flex flex-col gap-6 py-4 overflow-hidden relative"
+            className="w-full flex flex-col gap-8 py-8 overflow-hidden relative"
           >
-            {/* Edge Blur Gradients */}
-            <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-36 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-10 pointer-events-none" />
-            <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-36 bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-10 pointer-events-none" />
+            {/* Edge Fade Gradients (left and right only) */}
+            <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-40 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-20 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-40 bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-20 pointer-events-none" />
 
             {/* Row 1: Left */}
-            <motion.div style={{ x: row1Shift }} className="w-full overflow-hidden">
+            <motion.div style={{ x: row1Shift }} className="w-full overflow-visible py-4">
               <div className="animate-marquee-left flex gap-5 items-center">
-                {[...row1, ...row1, ...row1].map((tool, idx) => (
-                  <ArsenalTile key={`${tool.id}-${idx}`} tool={tool} />
+                {[...row1, ...row1].map((tool, idx) => (
+                  <ArsenalTile key={`${tool.id}-r1-${idx}`} tool={tool} />
                 ))}
               </div>
             </motion.div>
 
             {/* Row 2: Right */}
-            <motion.div style={{ x: row2Shift }} className="w-full overflow-hidden">
+            <motion.div style={{ x: row2Shift }} className="w-full overflow-visible py-4">
               <div className="animate-marquee-right flex gap-5 items-center">
-                {[...row2, ...row2, ...row2].map((tool, idx) => (
-                  <ArsenalTile key={`${tool.id}-${idx}`} tool={tool} />
+                {[...row2, ...row2].map((tool, idx) => (
+                  <ArsenalTile key={`${tool.id}-r2-${idx}`} tool={tool} />
                 ))}
               </div>
             </motion.div>
 
-            {/* Row 3: Left */}
-            <motion.div style={{ x: row3Shift }} className="w-full overflow-hidden">
-              <div className="animate-marquee-left flex gap-5 items-center">
-                {[...row3, ...row3, ...row3].map((tool, idx) => (
-                  <ArsenalTile key={`${tool.id}-${idx}`} tool={tool} />
+            {/* Row 3: Left (alternative speed) */}
+            <motion.div style={{ x: row3Shift }} className="w-full overflow-visible py-4">
+              <div className="animate-marquee-left-alt flex gap-5 items-center">
+                {[...row3, ...row3].map((tool, idx) => (
+                  <ArsenalTile key={`${tool.id}-r3-${idx}`} tool={tool} />
                 ))}
               </div>
             </motion.div>
@@ -217,13 +217,23 @@ export default function Arsenal() {
   );
 }
 
-// Single Marquee Tool Tile with Homogeneous Optical Sizing (56-72px feel)
+// Single Marquee Tool Tile with Fixed Hit Area and Scaled Internal Element (Point 1)
 function ArsenalTile({ tool }: { tool: ToolItem }) {
   return (
-    <div className="group relative flex-shrink-0 cursor-pointer">
-      <div className="flex flex-col items-center justify-between p-4 sm:p-5 w-32 sm:w-36 h-36 sm:h-40 rounded-[28px] glass-card transition-all duration-300 group-hover:scale-120 group-hover:shadow-[0_20px_50px_rgba(244,63,110,0.28)] group-hover:bg-white group-hover:border-[#F43F6E]/30 select-none">
+    <div className="group relative flex-shrink-0 w-32 sm:w-36 h-36 sm:h-40 cursor-pointer z-10 hover:z-40">
+      {/* Floating Tooltip inside fixed wrapper: moves with the tile, never clipped */}
+      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 pointer-events-none opacity-0 group-hover:opacity-100 group-hover:translate-y-0 translate-y-1 transition-all duration-200 z-50 whitespace-nowrap">
+        <div className="px-3.5 py-1.5 rounded-xl bg-[#14141F] text-white text-[11px] shadow-2xl border border-white/10 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#F43F6E] animate-ping" />
+          <span className="font-medium">{tool.name}</span>
+          <span className="text-white/60">• {tool.description}</span>
+        </div>
+      </div>
+
+      {/* Internal Interactive Element: zooms 1.2 on hover without altering outer hit zone */}
+      <div className="w-full h-full p-4 sm:p-5 rounded-[28px] glass-card flex flex-col items-center justify-between transition-transform duration-300 ease-out group-hover:scale-120 group-hover:shadow-[0_22px_55px_rgba(244,63,110,0.3)] group-hover:bg-white group-hover:border-[#F43F6E]/40 pointer-events-none select-none">
         {/* Real Logo in Vibrant Color permanently */}
-        <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.03] group-hover:scale-110 transition-transform duration-300">
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.03]">
           <ToolLogo id={tool.id} name={tool.name} size={48} />
         </div>
 
@@ -235,15 +245,6 @@ function ArsenalTile({ tool }: { tool: ToolItem }) {
           <span className="text-[10px] text-[var(--ink-muted)] block truncate">
             {tool.category}
           </span>
-        </div>
-      </div>
-
-      {/* Floating Tooltip with description on hover */}
-      <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-50 whitespace-nowrap">
-        <div className="px-3.5 py-2 rounded-xl bg-[#14141F] text-white text-[11px] shadow-2xl border border-white/10 flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-[#F43F6E] animate-ping" />
-          <span className="font-medium">{tool.name}</span>
-          <span className="text-white/60">• {tool.description}</span>
         </div>
       </div>
     </div>

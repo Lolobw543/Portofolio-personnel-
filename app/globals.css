@@ -132,32 +132,45 @@ body {
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.035'/%3E%3C/svg%3E");
 }
 
-/* Marquee infinite animations */
+/* Marquee infinite animations (Point 1: Continuous, Never Pause on Hover) */
 @keyframes marqueeLeft {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% { transform: translate3d(0, 0, 0); }
+  100% { transform: translate3d(-50%, 0, 0); }
 }
 
 @keyframes marqueeRight {
-  0% { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+  0% { transform: translate3d(-50%, 0, 0); }
+  100% { transform: translate3d(0, 0, 0); }
 }
 
 .animate-marquee-left {
   display: flex;
   width: max-content;
-  animation: marqueeLeft 38s linear infinite;
+  will-change: transform;
+  animation: marqueeLeft 34s linear infinite;
 }
 
 .animate-marquee-right {
   display: flex;
   width: max-content;
-  animation: marqueeRight 42s linear infinite;
+  will-change: transform;
+  animation: marqueeRight 30s linear infinite;
 }
 
-.animate-marquee-left:hover,
-.animate-marquee-right:hover {
-  animation-play-state: paused;
+.animate-marquee-left-alt {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+  animation: marqueeLeft 36s linear infinite;
+}
+
+/* Reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-left,
+  .animate-marquee-right,
+  .animate-marquee-left-alt {
+    animation-duration: 120s !important;
+  }
 }
 
 /* Outline text styles */
