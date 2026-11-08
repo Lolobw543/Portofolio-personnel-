@@ -14,6 +14,7 @@ const plusJakartaSans = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(SITE_CONTENT.meta.siteUrl),
   title: `${SITE_CONTENT.meta.author} — ${SITE_CONTENT.meta.role}`,
   description: SITE_CONTENT.meta.description,
   keywords: [
@@ -37,6 +38,14 @@ export const metadata: Metadata = {
     siteName: SITE_CONTENT.meta.siteName,
     locale: SITE_CONTENT.meta.locale,
     type: "website",
+    images: [
+      {
+        url: SITE_CONTENT.meta.ogImage,
+        width: 1200,
+        height: 630,
+        alt: `${SITE_CONTENT.meta.author} Portfolio`,
+      },
+    ],
   },
   icons: {
     icon: "/icon.svg",

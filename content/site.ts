@@ -2,17 +2,15 @@
  * SOURCE UNIQUE DE VÉRITÉ — CONTENU DU PORTFOLIO DE LAURENTIN
  * 
  * Modifiez facilement toutes vos informations, textes, chiffres, liens et projets ici.
- * Les éléments marqués [À REMPLACER] sont pré-remplis avec des valeurs élégantes en attendant vos données définitives.
+ * Tous les éléments non encore confirmés sont explicitement balisés [À REMPLACER].
  */
 
 export interface ToolItem {
   id: string;
   name: string;
-  category: "IA" | "Dev & Build" | "Création" | "Réseaux" | "Google" | "Paiement & Business";
-  iconName: string; // Utilisé pour mapper l'icône Simple Icon ou Lucide
+  category: "IA" | "Création" | "Réseaux" | "Google" | "Business" | "Stack Technique";
   color: string;
-  url?: string;
-  description?: string;
+  description: string;
 }
 
 export interface ProjectItem {
@@ -32,24 +30,7 @@ export interface ProjectItem {
   demoUrl?: string;
   githubUrl?: string;
   coverImage: string;
-  videoPlaceholder?: string;
-}
-
-export interface ChapterItem {
-  number: string;
-  ghostWord: string;
-  badge: string;
-  title: string;
-  highlightWords: string[];
-  description: string[];
-  tags: string[];
-  projectPreview: {
-    title: string;
-    subtitle: string;
-    badge: string;
-    metrics: string;
-    tagline: string;
-  };
+  placeholder?: boolean;
 }
 
 export interface MethodStep {
@@ -90,7 +71,8 @@ export const SITE_CONTENT = {
     headline: "Je pilote des drones, je construis des SaaS et j'automatise tout avec l'IA.",
     description: "Portfolio personnel de Laurentin : jeune entrepreneur français, télépilote de drone certifié, créateur de SaaS, de marques e-commerce et d'automatisations IA.",
     locale: "fr_FR",
-    siteUrl: "https://laurentin.design", // [À REMPLACER si nom de domaine différent]
+    siteUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://portofoliopersonellll.vercel.app",
+    ogImage: "/images/og-image.webp",
   },
 
   navigation: {
@@ -134,8 +116,9 @@ export const SITE_CONTENT = {
       { label: "Workflows IA & n8n", icon: "sparkles", delay: 0.3 },
       { label: "E-commerce & Branding", icon: "shopping-bag", delay: 0.45 },
     ],
-    photoPlaceholder: "/me.jpg", // [À REMPLACER par votre propre photo portrait]
+    photoPlaceholder: "/me.jpg",
     photoAlt: "Laurentin — Télépilote de drone et créateur de SaaS",
+    placeholder: true,
   },
 
   manifesto: {
@@ -150,176 +133,223 @@ export const SITE_CONTENT = {
     badge: "Mon arsenal d'outils",
     title: "Les outils que je maîtrise au quotidien",
     titleHighlight: "maîtrise au quotidien",
-    description: "Une pile technologique pensée pour concevoir, tester et automatiser à la vitesse de la lumière.",
+    description: "Une pile technologique complète pour concevoir, prototyper, automatiser et piloter en pleine autonomie.",
     categories: [
       "Tous",
       "IA",
-      "Dev & Build",
       "Création",
       "Réseaux",
       "Google",
-      "Paiement & Business",
+      "Business",
     ] as const,
-    tools: [
-      // IA
-      { id: "chatgpt", name: "ChatGPT", category: "IA", iconName: "SiOpenai", color: "#10A37F", description: "Prompting avancé & Agents" },
-      { id: "gemini", name: "Gemini", category: "IA", iconName: "SiGooglegemini", color: "#8E75FF", description: "Multimodalité & Analyse approfondie" },
-      { id: "claude", name: "Claude", category: "IA", iconName: "SiAnthropic", color: "#D97706", description: "Raisonnement & Coding d'élite" },
-      { id: "kimi", name: "Kimi", category: "IA", iconName: "SiSparklines", color: "#0066FF", description: "Contexte ultra-long" },
-      { id: "antigravity", name: "Antigravity", category: "IA", iconName: "SiGoogle", color: "#4285F4", description: "Agentic coding orchestré" },
-      { id: "codex", name: "OpenAI Codex", category: "IA", iconName: "SiOpenai", color: "#000000", description: "Synthèse de code & scripts" },
-      { id: "lovable", name: "Lovable", category: "IA", iconName: "SiHeart", color: "#FF3366", description: "Prototypage full-stack ultra-rapide" },
-      { id: "cursor", name: "Cursor", category: "IA", iconName: "SiVscodium", color: "#000000", description: "IDE IA & vibe coding quotidien" },
-      { id: "bolt", name: "Bolt.new", category: "IA", iconName: "SiLightning", color: "#FFB000", description: "Scaffolding web in-browser" },
-      { id: "n8n", name: "n8n", category: "IA", iconName: "SiN8N", color: "#EA4B71", description: "Workflows IA auto-hébergés complexes" },
-      { id: "make", name: "Make", category: "IA", iconName: "SiMake", color: "#6D28D9", description: "Automatisations API multi-services" },
 
-      // Dev & Build
-      { id: "nextjs", name: "Next.js", category: "Dev & Build", iconName: "SiNextdotjs", color: "#000000", description: "Framework React full-stack" },
-      { id: "typescript", name: "TypeScript", category: "Dev & Build", iconName: "SiTypescript", color: "#3178C6", description: "Typage strict & fiabilité" },
-      { id: "tailwind", name: "Tailwind CSS", category: "Dev & Build", iconName: "SiTailwindcss", color: "#06B6D4", description: "Design responsive & fluide" },
-      { id: "supabase", name: "Supabase", category: "Dev & Build", iconName: "SiSupabase", color: "#3ECF8E", description: "Base Postgres & auth intégrée" },
-      { id: "vercel", name: "Vercel", category: "Dev & Build", iconName: "SiVercel", color: "#000000", description: "Déploiements Edge instantanés" },
+    // Les 33 outils majeurs maîtrisés, dans l'ordre exact demandé
+    primaryTools: [
+      // IA
+      { id: "chatgpt", name: "ChatGPT", category: "IA", color: "#10A37F", description: "Agents autonomes & Prompting avancé" },
+      { id: "gemini", name: "Gemini", category: "IA", color: "#8E75FF", description: "Raisonnement multimodal & analyse poussée" },
+      { id: "claude", name: "Claude", category: "IA", color: "#D97706", description: "Architecture logique & vibe coding" },
+      { id: "kimi", name: "Kimi", category: "IA", color: "#0066FF", description: "Analyse de contextes massifs" },
+      { id: "antigravity", name: "Antigravity", category: "IA", color: "#6366F1", description: "Agentic coding orchestré" },
+      { id: "codex", name: "Codex", category: "IA", color: "#10A37F", description: "Génération & complétion de code" },
+      { id: "lovable", name: "Lovable", category: "IA", color: "#FF3366", description: "Prototypage full-stack instantané" },
+      { id: "cursor", name: "Cursor", category: "IA", color: "#141414", description: "IDE IA & vibe coding quotidien" },
+      { id: "bolt", name: "Bolt", category: "IA", color: "#F59E0B", description: "Scaffolding d'applications in-browser" },
+      { id: "n8n", name: "n8n", category: "IA", color: "#EA4B71", description: "Pipelines autonomes & auto-hébergement" },
+      { id: "make", name: "Make", category: "IA", color: "#6D28D9", description: "Orchestration multi-services API" },
 
       // Création
-      { id: "figma", name: "Figma", category: "Création", iconName: "SiFigma", color: "#F24E1E", description: "UI/UX, design systems & prototypes" },
-      { id: "canva", name: "Canva", category: "Création", iconName: "SiCanva", color: "#00C4CC", description: "Templates graphiques rapides" },
-      { id: "photoroom", name: "Photoroom", category: "Création", iconName: "SiCamera", color: "#FF4A70", description: "Détourage IA & packshots e-commerce" },
-      { id: "capcut", name: "CapCut", category: "Création", iconName: "SiCapcut", color: "#000000", description: "Montages dynamiques formats courts" },
-      { id: "davinci", name: "DaVinci Resolve", category: "Création", iconName: "SiResolve", color: "#FF5500", description: "Étalonnage cinématique & colorimétrie" },
+      { id: "figma", name: "Figma", category: "Création", color: "#F24E1E", description: "Design systems & UI/UX réactives" },
+      { id: "canva", name: "Canva", category: "Création", color: "#00C4CC", description: "Visuels marketing rapides & déclinaisons" },
+      { id: "photoroom", name: "Photoroom", category: "Création", color: "#EC4899", description: "Détourage IA & packshots e-commerce" },
+      { id: "capcut", name: "CapCut", category: "Création", color: "#000000", description: "Montage percutant pour formats courts" },
+      { id: "davinci", name: "DaVinci Resolve", category: "Création", color: "#FF453A", description: "Étalonnage cinématique & colorimétrie 4K" },
 
       // Réseaux
-      { id: "discord", name: "Discord", category: "Réseaux", iconName: "SiDiscord", color: "#5865F2", description: "Gestion de communauté & webhooks" },
-      { id: "tiktok", name: "TikTok", category: "Réseaux", iconName: "SiTiktok", color: "#000000", description: "Contenus viraux & trends" },
-      { id: "instagram", name: "Instagram", category: "Réseaux", iconName: "SiInstagram", color: "#E4405F", description: "Image de marque & Reels" },
-      { id: "facebook", name: "Facebook", category: "Réseaux", iconName: "SiFacebook", color: "#1877F2", description: "Meta Ads & acquisition" },
-      { id: "linkedin", name: "LinkedIn", category: "Réseaux", iconName: "SiLinkedin", color: "#0A66C2", description: "Personal branding & réseau pro" },
-      { id: "x", name: "X (Twitter)", category: "Réseaux", iconName: "SiX", color: "#000000", description: "Veille tech & audience building" },
+      { id: "discord", name: "Discord", category: "Réseaux", color: "#5865F2", description: "Gestion de communauté & webhooks" },
+      { id: "tiktok", name: "TikTok", category: "Réseaux", color: "#000000", description: "Création virale & stratégie d'accroche" },
+      { id: "instagram", name: "Instagram", category: "Réseaux", color: "#E1306C", description: "Reels & identité visuelle soignée" },
+      { id: "facebook", name: "Facebook", category: "Réseaux", color: "#1877F2", description: "Meta Ads & acquisition" },
+      { id: "linkedin", name: "LinkedIn", category: "Réseaux", color: "#0A66C2", description: "Personal branding B2B" },
+      { id: "x", name: "X (Twitter)", category: "Réseaux", color: "#000000", description: "Veille technologique & audience building" },
 
       // Google
-      { id: "google", name: "Google Ecosystem", category: "Google", iconName: "SiGoogle", color: "#4285F4", description: "Workspace & APIs" },
-      { id: "gmail", name: "Gmail", category: "Google", iconName: "SiGmail", color: "#EA4335", description: "Gestion de boîte automatisée" },
-      { id: "gdrive", name: "Google Drive", category: "Google", iconName: "SiGoogledrive", color: "#34A853", description: "Stockage & pipelines cloud" },
-      { id: "gdocs", name: "Google Docs", category: "Google", iconName: "SiGoogledocs", color: "#4285F4", description: "Scripts & génération de docs" },
-      { id: "gsheets", name: "Google Sheets", category: "Google", iconName: "SiGooglesheets", color: "#34A853", description: "Bases de données légères & triggers" },
-      { id: "youtube", name: "YouTube", category: "Google", iconName: "SiYoutube", color: "#FF0000", description: "Hébergement vidéo 4K & shorts" },
+      { id: "google", name: "Google", category: "Google", color: "#4285F4", description: "Écosystème Workspace & Cloud" },
+      { id: "gmail", name: "Gmail", category: "Google", color: "#EA4335", description: "Routage d'emails & automatisation" },
+      { id: "gdrive", name: "Google Drive", category: "Google", color: "#34A853", description: "Stockage cloud & assets sécurisés" },
+      { id: "gdocs", name: "Google Docs", category: "Google", color: "#4285F4", description: "Rédaction assistée & scripts IA" },
+      { id: "gsheets", name: "Google Sheets", category: "Google", color: "#0F9D58", description: "Bases de données légères & synchronisation" },
+      { id: "youtube", name: "YouTube", category: "Google", color: "#FF0000", description: "Diffusion 4K & shorts optimisés" },
 
-      // Paiement & Business
-      { id: "shopify", name: "Shopify", category: "Paiement & Business", iconName: "SiShopify", color: "#7AB55C", description: "Plateforme e-commerce & conversion" },
-      { id: "stripe", name: "Stripe", category: "Paiement & Business", iconName: "SiStripe", color: "#635BFF", description: "Paiements récurrents SaaS & checkout" },
-      { id: "paypal", name: "PayPal", category: "Paiement & Business", iconName: "SiPaypal", color: "#00457C", description: "Passerelle de paiement globale" },
-      { id: "phantom", name: "Phantom", category: "Paiement & Business", iconName: "SiSolana", color: "#AB9FF2", description: "Web3 & paiements on-chain" },
-      { id: "notion", name: "Notion", category: "Paiement & Business", iconName: "SiNotion", color: "#000000", description: "Second cerveau, CRM & gestion de projet" },
+      // Business
+      { id: "shopify", name: "Shopify", category: "Business", color: "#7AB55C", description: "Boutiques en ligne à fort taux de conversion" },
+      { id: "stripe", name: "Stripe", category: "Business", color: "#635BFF", description: "Facturation SaaS & abonnements sécurisés" },
+      { id: "paypal", name: "PayPal", category: "Business", color: "#00457C", description: "Passerelle de paiement internationale" },
+      { id: "phantom", name: "Phantom", category: "Business", color: "#8E75FF", description: "Transactions crypto & Web3" },
+      { id: "notion", name: "Notion", category: "Business", color: "#000000", description: "Second cerveau, documentation & CRM" },
+    ] as ToolItem[],
+
+    // Groupe séparé : Stack Technique
+    techStack: [
+      { id: "nextjs", name: "Next.js", category: "Stack Technique", color: "#000000", description: "Framework React App Router full-stack" },
+      { id: "typescript", name: "TypeScript", category: "Stack Technique", color: "#3178C6", description: "Typage statique & robustesse logicielle" },
+      { id: "tailwind", name: "Tailwind CSS", category: "Stack Technique", color: "#06B6D4", description: "Design moderne, responsive & performant" },
+      { id: "supabase", name: "Supabase", category: "Stack Technique", color: "#3ECF8E", description: "PostgreSQL temps réel, Auth & Storage" },
+      { id: "vercel", name: "Vercel", category: "Stack Technique", color: "#000000", description: "Déploiement Edge mondial & CI/CD instantané" },
     ] as ToolItem[],
   },
 
-  chapters: [
-    {
+  chapters: {
+    ai: {
       number: "01",
-      ghostWord: "AUTOMATION",
       badge: "Cœur d'expertise",
       title: "Intelligence Artificielle & Automatisation",
       highlightWords: ["Intelligence Artificielle", "Automatisation"],
+      tagline: "De l'idée brute au post prêt et programmé sur 4 réseaux en 90 secondes.",
+      speedMetric: "90 secondes",
+      metrics: "[À REMPLACER: +30h économisées / mois]",
       description: [
         "Je conçois des pipelines autonomes qui remplacent les tâches répétitives par de la valeur pure.",
-        "Workflows avancés n8n et Make connectés à des modèles LLM (Claude, GPT-4, Gemini) pour générer, enrichir et publier sans intervention humaine.",
+        "Workflows avancés n8n et Make connectés aux meilleurs LLMs (Claude, GPT-4o, Gemini) pour générer, enrichir et publier sans intervention humaine.",
         "Automatisation intégrale de la production de contenu et du cross-posting sur TikTok, Instagram, LinkedIn et X.",
         "Des agents IA sur-mesure capables de monitorer des opportunités et d'exécuter des flux complexes 24h/24.",
       ],
-      tags: ["n8n", "Make", "Agents IA", "Multi-Posting Automatisé", "Webhooks", "OpenAI / Claude API"],
-      projectPreview: {
-        title: "Système de Publication Omnicanale IA",
-        subtitle: "De l'idée brute au post prêt et programmé sur 4 réseaux en 90 secondes.",
-        badge: "100% Automatisé",
-        metrics: "+30h économisées / mois",
-        tagline: "Génération de scripts, visuels IA, titrage SEO et programmation automatique sans clic.",
+      nodes: [
+        { id: "idea", label: "Idée Brute", icon: "sparkles", type: "input" },
+        { id: "n8n", label: "n8n Workflow", icon: "n8n", type: "process" },
+        { id: "chatgpt", label: "ChatGPT / Claude", icon: "chatgpt", type: "llm" },
+        { id: "tiktok", label: "TikTok", icon: "tiktok", type: "output" },
+        { id: "instagram", label: "Instagram", icon: "instagram", type: "output" },
+        { id: "linkedin", label: "LinkedIn", icon: "linkedin", type: "output" },
+        { id: "x", label: "X (Twitter)", icon: "x", type: "output" },
+      ],
+      images: {
+        nodes: "/images/ai/workflow-nodes.webp",
+        robotHand: "/images/ai/robot-hand.webp",
+        feed1: "/images/ai/phone-posts-1.webp",
+        feed2: "/images/ai/phone-posts-2.webp",
+        sphere: "/images/ai/network-sphere.webp",
       },
+      placeholder: true,
     },
-    {
+
+    saas: {
       number: "02",
-      ghostWord: "SOFTWARE",
       badge: "SaaS & Build",
       title: "SaaS & Développement Assisté par IA",
       highlightWords: ["SaaS", "Développement"],
+      tagline: "Projet phare : CertiDron, copilote IA des télépilotes professionnels.",
+      statusMetric: "[À REMPLACER: Statut SaaS]",
+      complianceMetric: "[À REMPLACER: Temps de conformité divisé par 4]",
       description: [
         "Le 'vibe coding' poussé à son paroxysme : concevoir des applications web et logicielles complètes en quelques jours plutôt qu'en plusieurs mois.",
-        "Projet phare : CertiDron, une solution SaaS conçue pour les télépilotes, automatisant la préparation, la conformité réglementaire et les autorisations de vol grâce à l'IA.",
+        "Projet phare : CertiDron, une solution SaaS conçue pour les télépilotes, automatisant la préparation de mission, la conformité réglementaire DGAC et les déclarations de vol grâce à l'IA.",
         "Développement full-stack moderne : Next.js App Router, bases Supabase, auth sécurisée et intégration Stripe pour les abonnements.",
         "Conception orientée rentabilité et time-to-market immédiat.",
       ],
-      tags: ["CertiDron", "Next.js", "TypeScript", "Tailwind", "Supabase", "Stripe Billing", "Vibe Coding"],
-      projectPreview: {
-        title: "CertiDron — IA pour Télépilotes",
-        subtitle: "Automatisation de plans de vol, déclarations AlphaTango et conformité DGAC.",
-        badge: "SaaS en production",
-        metrics: "Temps de conformité divisé par 4",
-        tagline: "Le copilote intelligent qui libère les télépilotes des contraintes administratives.",
+      panels: [
+        { title: "Plan de vol IA", metric: "Optimisé S1/S2/S3", image: "/images/saas/panel-flightplan.webp" },
+        { title: "Météo & Espace aérien", metric: "Temps réel", image: "/images/saas/panel-weather.webp" },
+        { title: "Conformité DGAC", metric: "100% AlphaTango", image: "/images/saas/panel-compliance.webp" },
+      ],
+      images: {
+        dashboard: "/images/saas/certidron-dashboard.webp",
+        laptop: "/images/saas/laptop-code.webp",
       },
+      placeholder: true,
     },
-    {
+
+    lunor: {
       number: "03",
-      ghostWord: "COMMERCE",
-      badge: "E-Commerce & Branding",
-      title: "E-Commerce & Création de Marques",
-      highlightWords: ["E-Commerce", "Création de Marques"],
+      badge: "E-Commerce & Joaillerie",
+      title: "E-Commerce & Marque Lunor",
+      highlightWords: ["E-Commerce", "Lunor"],
+      brandName: "Lunor",
+      revenueMetric: "[À REMPLACER: +120k€ générés]",
+      conversionMetric: "[À REMPLACER: 3.8% de conversion]",
+      tagline: "Du design du packaging aux tunnels d'achat ultra-fluides sur Shopify.",
       description: [
         "Lancer et faire croître des marques directes au consommateur (D2C) avec une exigence visuelle digne du luxe.",
-        "Création de la marque de bijoux Lunor : identité visuelle raffinée, storytelling, boutique Shopify hautement optimisée pour le taux de conversion.",
+        "Création intégrale de la marque de bijoux Lunor : identité visuelle raffinée, storytelling, boutique Shopify hautement optimisée pour le taux de conversion.",
         "Automatisations des stocks, des e-mails transactionnels et du support client pour une gestion fluide.",
         "Maîtrise des leviers d'acquisition payants (Meta Ads, TikTok Ads) et du marketing d'influence.",
       ],
-      tags: ["Shopify", "Lunor Bijoux", "Conversion Rate Optimization", "Branding", "Meta Ads", "Logistique D2C"],
-      projectPreview: {
-        title: "Lunor — Joaillerie Moderne",
-        subtitle: "Boutique en ligne haut de gamme et expérience client fluide.",
-        badge: "Marque D2C",
-        metrics: "[À REMPLACER: +120k€ générés]",
-        tagline: "Du design du packaging aux tunnels d'achat ultra-fluides sur Shopify.",
+      images: {
+        ring: "/images/lunor/ring-silk.webp",
+        necklace: "/images/lunor/necklace-cream.webp",
+        earrings: "/images/lunor/earrings-macro.webp",
+        packaging: "/images/lunor/packaging-luxury.webp",
+        model: "/images/lunor/model-editorial.webp",
+        shopify: "/images/lunor/shopify-store.webp",
       },
+      placeholder: true,
     },
-    {
+
+    drone: {
       number: "04",
-      ghostWord: "SKYLINE",
-      badge: "Air & Image",
+      badge: "Air & Image Aérienne",
       title: "Drone & Image Aérienne Certifiée",
       highlightWords: ["Drone", "Image Aérienne"],
+      hoursMetric: "[À REMPLACER: 100h+ de vol]",
+      certification: "[À REMPLACER: 100% DGAC]",
+      tagline: "Des angles inédits et une stabilité absolue pour magnifier n'importe quel domaine.",
       description: [
         "Télépilote de drone professionnel certifié par la DGAC (Direction Générale de l'Aviation Civile).",
         "Captation photo et vidéo 4K cinématique pour l'immobilier de prestige, le tourisme, les événements et les suivis de chantiers.",
         "Maîtrise totale des scénarios de vol réglementaires S1, S2, S3 en milieu urbain et naturel.",
         "Rendu couleur soigné avec étalonnage professionnel pour donner un souffle spectaculaire à chaque prise.",
       ],
-      tags: ["Télépilote DGAC", "Vidéo 4K", "Étalonnage Cinématique", "Immobilier de prestige", "Scénarios S1/S2/S3"],
-      projectPreview: {
-        title: "Galerie Aérienne Cinématique",
-        subtitle: "Prises de vues aériennes dynamiques et travellings immersifs.",
-        badge: "Certifié DGAC",
-        metrics: "[À REMPLACER: 100+ vols certifiés]",
-        tagline: "Des angles inédits et une stabilité absolue pour magnifier n'importe quel domaine.",
+      hud: {
+        altitude: "ALT: 120m AGL",
+        gps: "48°51'24\" N 2°21'07\" E",
+        battery: "BAT: 94%",
+        camera: "4K DCI • 60 FPS • D-LOG",
+        shutter: "1/120s • ISO 100",
       },
+      gallery: [
+        { title: "Château & Vignobles", location: "Bordeaux", tag: "S3 Urbain • 4K", image: "/images/drone/chateau-vineyard.webp" },
+        { title: "Villa d'Exception", location: "Côte d'Azur", tag: "S1 • 60fps", image: "/images/drone/villa-riviera.webp" },
+        { title: "Suivi de Chantier", location: "Île-de-France", tag: "Orthophoto", image: "/images/drone/aerial-ortho.webp" },
+        { title: "Falaise & Couchant", location: "Normandie", tag: "Golden Hour", image: "/images/drone/coast-sunset.webp" },
+        { title: "Forêt & Brume", location: "Vosges", tag: "Cinématique", image: "/images/drone/forest-mist.webp" },
+        { title: "Perspective Urbaine", location: "Paris", tag: "S3 • Autorisé", image: "/images/drone/city-topdown.webp" },
+      ],
+      images: {
+        hero: "/images/drone/drone-hero.webp",
+        flight: "/images/drone/drone-flight.webp",
+      },
+      placeholder: true,
     },
-    {
+
+    content: {
       number: "05",
-      ghostWord: "CONTENT",
       badge: "Post-Production",
       title: "Création de Contenu & Montage Vidéo",
       highlightWords: ["Création de Contenu", "Montage Vidéo"],
+      viewsMetric: "[À REMPLACER: 2.5M+ vues cumulées]",
+      retentionMetric: "[À REMPLACER: 85% de rétention à 3s]",
+      tagline: "Rythme millimétré, sound design immersif et storytelling percutant.",
       description: [
         "La vidéo est le médium roi de la conversion et de la mémorisation.",
         "Montage dynamique de formats courts percutants (Reels, TikTok, Shorts) sur CapCut et DaVinci Resolve.",
         "Intégration d'effets visuels, de sound design captivant, de sous-titres dynamiques et de transitions chirurgicales.",
         "Stratégie de rétention pour captiver l'attention dès les 3 premières secondes.",
       ],
-      tags: ["DaVinci Resolve", "CapCut Pro", "Formats Courts Viraux", "Sound Design", "Motion Design", "Hooks & Rétention"],
-      projectPreview: {
-        title: "Production Vidéo & Formats Courts",
-        subtitle: "Des formats conçus pour capter l'attention et générer de l'engagement massif.",
-        badge: "Haute rétention",
-        metrics: "[À REMPLACER: 2.5M+ vues cumulées]",
-        tagline: "Rythme millimétré, sound design immersif et storytelling percutant.",
+      tracks: [
+        { name: "Piste A (Caméra principale)", color: "bg-blue-500" },
+        { name: "Piste B (B-Rolls 4K & Drone)", color: "bg-emerald-500" },
+        { name: "FX & Sound Design immersif", color: "bg-rose-500" },
+        { name: "Sous-titres dynamiques IA", color: "bg-amber-500" },
+      ],
+      images: {
+        timeline: "/images/content/editor-timeline.webp",
+        reel1: "/images/content/phone-reel-1.webp",
+        reel2: "/images/content/phone-reel-2.webp",
+        colorGrading: "/images/content/color-grading.webp",
       },
+      placeholder: true,
     },
-  ] as ChapterItem[],
+  },
 
   projects: [
     {
@@ -335,13 +365,14 @@ export const SITE_CONTENT = {
       context: "La réglementation des vols de drone est chronophage et complexe. CertiDron simplifie la préparation en générant les documents de vol conformes DGAC en quelques secondes grâce à l'IA.",
       toolsUsed: ["Next.js", "TypeScript", "Tailwind", "Supabase", "OpenAI API", "Stripe"],
       metrics: [
-        { label: "Temps gagné", value: "85%" },
-        { label: "Conformité", value: "100% DGAC" },
-        { label: "Statut", value: "Live SaaS" },
+        { label: "Temps gagné", value: "[À REMPLACER: 85%]" },
+        { label: "Conformité", value: "[À REMPLACER: 100% DGAC]" },
+        { label: "Statut", value: "[À REMPLACER: Live SaaS]" },
       ],
       tags: ["SaaS", "IA Copilot", "Next.js", "Aviation DGAC"],
-      demoUrl: "https://certidron.fr", // [À REMPLACER si url différente]
-      coverImage: "/projects/certidron.png",
+      demoUrl: "https://certidron.fr",
+      coverImage: "/images/projects/certidron-cover.webp",
+      placeholder: true,
     },
     {
       id: "lunor",
@@ -357,11 +388,12 @@ export const SITE_CONTENT = {
       toolsUsed: ["Shopify", "Figma", "Photoroom", "Meta Ads", "Klaviyo"],
       metrics: [
         { label: "Conversion", value: "[À REMPLACER: 3.8%]" },
-        { label: "Boutique", value: "Shopify Custom" },
+        { label: "Ventes", value: "[À REMPLACER: +120k€]" },
       ],
       tags: ["E-Commerce", "Branding", "Shopify", "Design System"],
-      demoUrl: "https://lunor-paris.com", // [À REMPLACER]
-      coverImage: "/projects/lunor.png",
+      demoUrl: "https://lunor-paris.com",
+      coverImage: "/images/projects/lunor-cover.webp",
+      placeholder: true,
     },
     {
       id: "autosocial",
@@ -381,7 +413,8 @@ export const SITE_CONTENT = {
       ],
       tags: ["n8n", "Make", "IA Générative", "Social Media"],
       demoUrl: "#contact",
-      coverImage: "/projects/autosocial.png",
+      coverImage: "/images/projects/autosocial-cover.webp",
+      placeholder: true,
     },
     {
       id: "drone-showreel",
@@ -397,11 +430,12 @@ export const SITE_CONTENT = {
       toolsUsed: ["Drone DJI Pro", "DaVinci Resolve", "Filtres ND", "4K 60fps"],
       metrics: [
         { label: "Résolution", value: "4K DCI Cinema" },
-        { label: "Sécurité", value: "Scénarios S1/S2/S3" },
+        { label: "Heures", value: "[À REMPLACER: 100h+ vol]" },
       ],
       tags: ["Drone", "Cinématique", "DaVinci Resolve", "Immobilier"],
       demoUrl: "#drone-showreel",
-      coverImage: "/projects/drone.png",
+      coverImage: "/images/projects/drone-cover.webp",
+      placeholder: true,
     },
   ] as ProjectItem[],
 
@@ -452,15 +486,15 @@ export const SITE_CONTENT = {
     titleHighlight: "mon parcours",
     items: [
       {
-        value: "15+",
+        value: "[À REMPLACER: 15+]",
         numberValue: 15,
         suffix: "+",
         label: "Projets digitaux conçus & livrés",
-        description: "[À REMPLACER: SaaS, boutiques Shopify, automatisations]",
+        description: "[À REMPLACER: SaaS, e-commerce, flux IA]",
         highlight: false,
       },
       {
-        value: "4",
+        value: "[À REMPLACER: 4]",
         numberValue: 4,
         suffix: "",
         label: "SaaS & logiciels développés",
@@ -468,7 +502,7 @@ export const SITE_CONTENT = {
         highlight: true,
       },
       {
-        value: "100h+",
+        value: "[À REMPLACER: 100h+]",
         numberValue: 100,
         suffix: "h+",
         label: "Heures de vol de drone certifiées",
@@ -476,9 +510,9 @@ export const SITE_CONTENT = {
         highlight: false,
       },
       {
-        value: "30h+",
+        value: "[À REMPLACER: 30h+]",
         numberValue: 30,
-        suffix: "h/semaine",
+        suffix: "h/sem",
         label: "Économisées grâce à l'IA",
         description: "Sur les workflows de création et de diffusion",
         highlight: false,
@@ -554,12 +588,12 @@ export const SITE_CONTENT = {
     title: "Un projet en tête ? Parlons-en.",
     titleHighlight: "Parlons-en.",
     subtitle: "Que ce soit pour un vol de drone, une automatisation IA sur-mesure, ou le développement d'un nouveau produit digital, je vous réponds sous 24 heures.",
-    email: "contact@laurentin.design", // [À REMPLACER par votre vrai email]
+    email: process.env.NEXT_PUBLIC_CONTACT_EMAIL || "contact@laurentin.design",
     socials: [
-      { name: "LinkedIn", url: "https://linkedin.com/in/laurentin", handle: "Laurentin" }, // [À REMPLACER]
-      { name: "Instagram", url: "https://instagram.com/laurentin", handle: "@laurentin" }, // [À REMPLACER]
-      { name: "X (Twitter)", url: "https://x.com/laurentin", handle: "@laurentin" }, // [À REMPLACER]
-      { name: "YouTube", url: "https://youtube.com/@laurentin", handle: "Laurentin" }, // [À REMPLACER]
+      { name: "LinkedIn", url: process.env.NEXT_PUBLIC_LINKEDIN_URL || "https://linkedin.com/in/laurentin", handle: "Laurentin" },
+      { name: "Instagram", url: process.env.NEXT_PUBLIC_INSTAGRAM_URL || "https://instagram.com/laurentin", handle: "@laurentin" },
+      { name: "X (Twitter)", url: process.env.NEXT_PUBLIC_X_URL || "https://x.com/laurentin", handle: "@laurentin" },
+      { name: "YouTube", url: process.env.NEXT_PUBLIC_YOUTUBE_URL || "https://youtube.com/@laurentin", handle: "Laurentin" },
     ],
     availabilityNote: "Disponible pour missions ponctuelles & collaborations stratégiques",
     location: "France • Déplacements possibles & Remote",

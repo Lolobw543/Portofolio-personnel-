@@ -1,7 +1,7 @@
 "use client";
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
 interface HighlightTextProps {
   children: React.ReactNode;
@@ -16,18 +16,20 @@ export default function HighlightText({
   className = "",
   color = "bg-[#FDE1E8]",
 }: HighlightTextProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.1 });
+
   return (
-    <span className={`relative inline-block whitespace-nowrap px-1.5 py-0.5 mx-0.5 z-0 ${className}`}>
+    <span ref={ref} className={`relative inline-block ${className}`}>
       <motion.span
         initial={{ scaleX: 0 }}
-        whileInView={{ scaleX: 1 }}
-        viewport={{ once: true, margin: "-10% 0px" }}
+        animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
         transition={{
-          duration: 0.65,
+          duration: 0.6,
           delay,
           ease: [0.16, 1, 0.3, 1],
         }}
-        className={`absolute inset-x-0 bottom-1 top-1.5 rounded-lg -z-10 origin-left ${color}`}
+        className={`absolute -inset-x-1.5 bottom-0.5 top-1 rounded-md z-0 origin-left ${color}`}
       />
       <span className="relative z-10 text-[var(--ink)] font-normal">{children}</span>
     </span>

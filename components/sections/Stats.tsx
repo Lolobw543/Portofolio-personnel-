@@ -83,11 +83,11 @@ function StatCard({ stat, index }: { stat: StatItem; index: number }) {
           <TrendingUp className="w-4 h-4 text-[#F43F6E]" />
         </span>
         <span
-          className={`text-[10px] uppercase tracking-wider px-2.5 py-1 rounded-full ${
-            isNavy ? "bg-white/10 text-white/70" : "bg-black/[0.03] text-[var(--ink-muted)]"
+          className={`text-[10px] font-semibold tracking-wider px-2.5 py-0.5 rounded-full ${
+            isNavy ? "bg-white/15 text-rose-300" : "bg-rose-50 text-rose-600 border border-rose-100"
           }`}
         >
-          Métrique
+          [À REMPLACER]
         </span>
       </div>
 

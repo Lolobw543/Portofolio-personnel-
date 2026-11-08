@@ -7,6 +7,7 @@ import { SITE_CONTENT } from "@/content/site";
 import SectionBadge from "@/components/common/SectionBadge";
 import HighlightText from "@/components/common/HighlightText";
 import MagneticButton from "@/components/common/MagneticButton";
+import PlaceholderBadge from "@/components/common/PlaceholderBadge";
 import { Plane, Code, Sparkles, ShoppingBag, ChevronDown, CheckCircle2 } from "lucide-react";
 
 export default function Hero() {
@@ -74,58 +75,34 @@ export default function Hero() {
       <div className="max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center relative z-10 my-auto">
         {/* Left Column: Hero Copy & Actions */}
         <div className="lg:col-span-7 flex flex-col items-start gap-6 order-2 lg:order-1">
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
+          <div>
             <SectionBadge label={SITE_CONTENT.hero.badge} icon={Sparkles} />
-          </motion.div>
+          </div>
 
           {/* Main Title with lightweight geometry & pink highlighter */}
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-light tracking-[-0.035em] text-[var(--ink)] leading-[1.12]"
-          >
-            Je pilote des <HighlightText delay={0.45}>drones</HighlightText>, je construis des{" "}
-            <HighlightText delay={0.65}>SaaS</HighlightText> et j&apos;automatise tout avec{" "}
-            <HighlightText delay={0.85}>l&apos;IA</HighlightText>.
-          </motion.h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-[4rem] font-light tracking-[-0.035em] text-[var(--ink)] leading-[1.14]">
+            Je pilote des <HighlightText delay={0.2}>drones</HighlightText>, je construis des{" "}
+            <HighlightText delay={0.4}>SaaS</HighlightText> et j&apos;automatise tout avec{" "}
+            <span className="inline-block whitespace-nowrap"><HighlightText delay={0.6}>l&apos;IA</HighlightText>.</span>
+          </h1>
 
           {/* Subtitle */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
-            className="text-base sm:text-lg text-[var(--ink-muted)] max-w-xl font-normal leading-relaxed"
-          >
+          <p className="text-base sm:text-lg text-[var(--ink-muted)] max-w-xl font-normal leading-relaxed">
             {SITE_CONTENT.hero.subtitle}
-          </motion.p>
+          </p>
 
           {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.65 }}
-            className="flex flex-wrap items-center gap-4 pt-2"
-          >
+          <div className="flex flex-wrap items-center gap-4 pt-2">
             <MagneticButton href={SITE_CONTENT.hero.ctaPrimary.href} variant="primary" size="lg">
               {SITE_CONTENT.hero.ctaPrimary.label}
             </MagneticButton>
             <MagneticButton href={SITE_CONTENT.hero.ctaSecondary.href} variant="secondary" size="lg">
               {SITE_CONTENT.hero.ctaSecondary.label}
             </MagneticButton>
-          </motion.div>
+          </div>
 
           {/* Proof micro-bar */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.9 }}
-            className="flex items-center gap-4 pt-4 text-xs text-[var(--ink-muted)]"
-          >
+          <div className="flex items-center gap-4 pt-4 text-xs text-[var(--ink-muted)]">
             <div className="flex items-center gap-1.5">
               <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
               <span>Certifié DGAC</span>
@@ -140,7 +117,7 @@ export default function Hero() {
               <CheckCircle2 className="w-4 h-4 text-[#3B82F6]" />
               <span>Dispo immédiate</span>
             </div>
-          </motion.div>
+          </div>
         </div>
 
         {/* Right Column: 3D Photo Card with Floating Badges */}
@@ -161,6 +138,7 @@ export default function Hero() {
             >
               {/* Inner card frame */}
               <div className="w-full h-full rounded-[24px] overflow-hidden relative bg-[#1B1B4B]">
+                <PlaceholderBadge />
                 <Image
                   src={SITE_CONTENT.hero.photoPlaceholder}
                   alt={SITE_CONTENT.hero.photoAlt}

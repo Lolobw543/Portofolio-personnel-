@@ -27,14 +27,25 @@ export default function Contact() {
   const services = SITE_CONTENT.services;
   const contact = SITE_CONTENT.contact;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate instantaneous smooth dispatch
-    setTimeout(() => {
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+      if (res.ok) {
+        setFormSubmitted(true);
+      } else {
+        alert("Erreur lors de l'envoi. Veuillez réessayer ou contacter directement par email.");
+      }
+    } catch {
+      alert("Erreur de connexion. Veuillez réessayer.");
+    } finally {
       setLoading(false);
-      setFormSubmitted(true);
-    }, 800);
+    }
   };
 
   const serviceIcon: Record<string, React.ReactNode> = {

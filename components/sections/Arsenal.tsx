@@ -6,7 +6,7 @@ import { SITE_CONTENT, ToolItem } from "@/content/site";
 import SectionBadge from "@/components/common/SectionBadge";
 import HighlightText from "@/components/common/HighlightText";
 import ToolLogo from "@/components/common/ToolLogo";
-import { Wrench } from "lucide-react";
+import { Wrench, Layers } from "lucide-react";
 
 export default function Arsenal() {
   const containerRef = useRef<HTMLElement>(null);
@@ -17,24 +17,28 @@ export default function Arsenal() {
     offset: ["start end", "end start"],
   });
 
-  const tools = SITE_CONTENT.arsenal.tools;
+  const tools = SITE_CONTENT.arsenal.primaryTools;
+  const techStack = SITE_CONTENT.arsenal.techStack;
   const categories = SITE_CONTENT.arsenal.categories;
 
-  // Split into 3 balanced rows for the marquee
-  const row1 = tools.slice(0, Math.ceil(tools.length / 3));
-  const row2 = tools.slice(Math.ceil(tools.length / 3), Math.ceil((tools.length * 2) / 3));
-  const row3 = tools.slice(Math.ceil((tools.length * 2) / 3));
+  // Split the 33 primary tools into 3 balanced rows for the marquee
+  const row1 = tools.slice(0, 11);
+  const row2 = tools.slice(11, 22);
+  const row3 = tools.slice(22, 33);
 
-  // Filtered tools
+  // Parallax subtle shifts for rows
+  const row1Shift = useTransform(scrollYProgress, [0, 1], [-60, 60]);
+  const row2Shift = useTransform(scrollYProgress, [0, 1], [70, -70]);
+  const row3Shift = useTransform(scrollYProgress, [0, 1], [-50, 50]);
+
+  // Initial cloud scatter to converged rows along entry scroll
+  const cloudConvergence = useTransform(scrollYProgress, [0, 0.35], [20, 0]);
+  const cloudBlur = useTransform(scrollYProgress, [0, 0.25], [10, 0]);
+
   const filteredTools =
     selectedCategory === "Tous"
       ? tools
       : tools.filter((tool) => tool.category === selectedCategory);
-
-  // Parallax subtle shifts for rows
-  const row1Shift = useTransform(scrollYProgress, [0, 1], [-40, 40]);
-  const row2Shift = useTransform(scrollYProgress, [0, 1], [50, -50]);
-  const row3Shift = useTransform(scrollYProgress, [0, 1], [-30, 30]);
 
   return (
     <section
@@ -102,44 +106,48 @@ export default function Arsenal() {
         </div>
       </div>
 
-      {/* Arsenal Display: Continuous Marquee Rows (When "Tous" is selected) OR Responsive Grid (When Filtered) */}
+      {/* Main Display: 3 Marquee Rows (When "Tous" is selected) OR Responsive Grid (When Filtered) */}
       <AnimatePresence mode="wait">
         {selectedCategory === "Tous" ? (
           <motion.div
             key="marquee-view"
+            style={{
+              y: cloudConvergence,
+              filter: useTransform(cloudBlur, (v) => `blur(${v}px)`),
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.4 }}
-            className="w-full flex flex-col gap-5 py-4 overflow-hidden relative"
+            transition={{ duration: 0.5 }}
+            className="w-full flex flex-col gap-6 py-4 overflow-hidden relative"
           >
             {/* Edge Blur Gradients */}
-            <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-32 bg-gradient-to-r from-[#FAF8F5] to-transparent z-10 pointer-events-none" />
-            <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-32 bg-gradient-to-l from-[#FAF8F5] to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 left-0 w-16 sm:w-36 bg-gradient-to-r from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-10 pointer-events-none" />
+            <div className="absolute top-0 bottom-0 right-0 w-16 sm:w-36 bg-gradient-to-l from-[#FAF8F5] via-[#FAF8F5]/80 to-transparent z-10 pointer-events-none" />
 
             {/* Row 1: Left */}
             <motion.div style={{ x: row1Shift }} className="w-full overflow-hidden">
-              <div className="animate-marquee-left flex gap-4 items-center">
+              <div className="animate-marquee-left flex gap-5 items-center">
                 {[...row1, ...row1, ...row1].map((tool, idx) => (
-                  <ToolCard key={`${tool.id}-${idx}`} tool={tool} />
+                  <ArsenalTile key={`${tool.id}-${idx}`} tool={tool} />
                 ))}
               </div>
             </motion.div>
 
             {/* Row 2: Right */}
             <motion.div style={{ x: row2Shift }} className="w-full overflow-hidden">
-              <div className="animate-marquee-right flex gap-4 items-center">
+              <div className="animate-marquee-right flex gap-5 items-center">
                 {[...row2, ...row2, ...row2].map((tool, idx) => (
-                  <ToolCard key={`${tool.id}-${idx}`} tool={tool} />
+                  <ArsenalTile key={`${tool.id}-${idx}`} tool={tool} />
                 ))}
               </div>
             </motion.div>
 
             {/* Row 3: Left */}
             <motion.div style={{ x: row3Shift }} className="w-full overflow-hidden">
-              <div className="animate-marquee-left flex gap-4 items-center">
+              <div className="animate-marquee-left flex gap-5 items-center">
                 {[...row3, ...row3, ...row3].map((tool, idx) => (
-                  <ToolCard key={`${tool.id}-${idx}`} tool={tool} />
+                  <ArsenalTile key={`${tool.id}-${idx}`} tool={tool} />
                 ))}
               </div>
             </motion.div>
@@ -152,29 +160,22 @@ export default function Arsenal() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.35 }}
-            className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 py-8"
+            className="max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 py-8"
           >
             {filteredTools.map((tool) => (
               <motion.div
                 key={tool.id}
                 layout
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.9 }}
-                transition={{ duration: 0.3 }}
-                className="group relative p-5 rounded-[24px] glass-card flex flex-col items-center text-center gap-3 hover:shadow-[0_12px_32px_rgba(244,63,110,0.18)] transition-all duration-300"
+                className="group relative p-6 rounded-[28px] glass-card flex flex-col items-center text-center gap-3.5 hover:shadow-[0_16px_40px_rgba(244,63,110,0.22)] hover:bg-white transition-all duration-300"
               >
-                <div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.04] group-hover:scale-110 transition-transform duration-300"
-                  style={{ color: tool.color }}
-                >
-                  <ToolLogo name={tool.name} id={tool.id} color={tool.color} className="w-6 h-6" />
+                <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.04] group-hover:scale-115 transition-transform duration-300">
+                  <ToolLogo id={tool.id} name={tool.name} size={48} />
                 </div>
                 <div>
                   <h4 className="font-semibold text-sm text-[var(--ink)] tracking-tight">{tool.name}</h4>
-                  <p className="text-[11px] text-[var(--ink-muted)] mt-1 line-clamp-1">{tool.description}</p>
+                  <p className="text-[11px] text-[var(--ink-muted)] mt-1 line-clamp-2">{tool.description}</p>
                 </div>
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded-full bg-black/[0.04] text-[var(--ink-muted)]">
+                <span className="text-[10px] font-medium px-2.5 py-0.5 rounded-full bg-black/[0.04] text-[var(--ink-muted)]">
                   {tool.category}
                 </span>
               </motion.div>
@@ -182,29 +183,56 @@ export default function Arsenal() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Groupe Séparé : Stack Technique */}
+      <div className="max-w-4xl mx-auto mt-20 pt-10 border-t border-black/[0.06]">
+        <div className="flex flex-col items-center text-center mb-8">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-black/[0.04] text-[var(--ink-muted)] uppercase tracking-wider mb-2">
+            <Layers className="w-3.5 h-3.5 text-[#3B82F6]" />
+            <span>Stack Technique & Production</span>
+          </div>
+          <p className="text-xs text-[var(--ink-muted)]">
+            Les fondations sur lesquelles je déploie mes plateformes et SaaS.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-5 gap-4">
+          {techStack.map((tech) => (
+            <div
+              key={tech.id}
+              className="group p-5 rounded-[24px] glass-card flex flex-col items-center text-center gap-3 hover:shadow-[0_12px_32px_rgba(59,130,246,0.2)] hover:bg-white transition-all duration-300"
+            >
+              <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.04] group-hover:scale-115 transition-transform duration-300">
+                <ToolLogo id={tech.id} name={tech.name} size={42} />
+              </div>
+              <div>
+                <span className="text-xs font-semibold text-[var(--ink)] block">{tech.name}</span>
+                <span className="text-[10px] text-[var(--ink-muted)] block mt-0.5">{tech.description}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </section>
   );
 }
 
-// Single Marquee Tool Card
-function ToolCard({ tool }: { tool: ToolItem }) {
+// Single Marquee Tool Tile with Homogeneous Optical Sizing (56-72px feel)
+function ArsenalTile({ tool }: { tool: ToolItem }) {
   return (
     <div className="group relative flex-shrink-0 cursor-pointer">
-      <div className="flex items-center gap-3 px-5 py-3.5 rounded-2xl glass-card transition-all duration-300 group-hover:scale-110 group-hover:shadow-[0_12px_30px_rgba(244,63,110,0.25)] group-hover:bg-white select-none">
-        {/* Tool Icon with gray-to-color transition */}
-        <div
-          className="w-8 h-8 rounded-xl flex items-center justify-center bg-white shadow-sm border border-black/[0.04] transition-all duration-300 grayscale group-hover:grayscale-0 group-hover:scale-110"
-          style={{ color: tool.color }}
-        >
-          <ToolLogo name={tool.name} id={tool.id} color={tool.color} className="w-5 h-5" />
+      <div className="flex flex-col items-center justify-between p-4 sm:p-5 w-32 sm:w-36 h-36 sm:h-40 rounded-[28px] glass-card transition-all duration-300 group-hover:scale-120 group-hover:shadow-[0_20px_50px_rgba(244,63,110,0.28)] group-hover:bg-white group-hover:border-[#F43F6E]/30 select-none">
+        {/* Real Logo in Vibrant Color permanently */}
+        <div className="w-16 h-16 rounded-2xl flex items-center justify-center bg-white shadow-sm border border-black/[0.03] group-hover:scale-110 transition-transform duration-300">
+          <ToolLogo id={tool.id} name={tool.name} size={48} />
         </div>
 
-        {/* Name */}
-        <div className="flex flex-col text-left">
-          <span className="text-xs font-semibold text-[var(--ink)] tracking-tight whitespace-nowrap">
+        {/* Tool Name underneath */}
+        <div className="text-center w-full mt-2">
+          <span className="text-xs font-semibold text-[var(--ink)] tracking-tight block truncate">
             {tool.name}
           </span>
-          <span className="text-[10px] text-[var(--ink-muted)] whitespace-nowrap">
+          <span className="text-[10px] text-[var(--ink-muted)] block truncate">
             {tool.category}
           </span>
         </div>
@@ -212,9 +240,10 @@ function ToolCard({ tool }: { tool: ToolItem }) {
 
       {/* Floating Tooltip with description on hover */}
       <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-200 z-50 whitespace-nowrap">
-        <div className="px-3 py-1.5 rounded-xl bg-[#14141F] text-white text-[11px] shadow-xl border border-white/10 flex items-center gap-1.5">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#F43F6E]" />
-          <span>{tool.description || tool.name}</span>
+        <div className="px-3.5 py-2 rounded-xl bg-[#14141F] text-white text-[11px] shadow-2xl border border-white/10 flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-[#F43F6E] animate-ping" />
+          <span className="font-medium">{tool.name}</span>
+          <span className="text-white/60">• {tool.description}</span>
         </div>
       </div>
     </div>

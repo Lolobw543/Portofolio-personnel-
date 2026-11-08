@@ -41,12 +41,37 @@ html {
 body {
   background-color: var(--bg);
   color: var(--ink);
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
   min-height: 100vh;
 }
 
 /* Glassmorphism custom utilities */
+@keyframes markerReveal {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
+
+.marker-highlight {
+  transform-origin: left;
+  transform: scaleX(0);
+}
+
+.marker-highlight.is-visible {
+  animation: markerReveal 0.65s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marker-highlight {
+    transform: scaleX(1) !important;
+    animation: none !important;
+  }
+}
+
 .glass-card {
   background: rgba(255, 255, 255, 0.72);
   backdrop-filter: blur(20px);

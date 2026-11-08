@@ -25,10 +25,7 @@ export default function Navbar() {
   return (
     <>
       <header className="fixed top-4 inset-x-0 z-50 flex justify-center px-4 sm:px-6 pointer-events-none">
-        <motion.nav
-          initial={{ y: -30, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        <nav
           className={`pointer-events-auto flex items-center justify-between transition-all duration-300 rounded-full border ${
             scrolled
               ? "py-2 px-3 sm:px-4 bg-white/80 backdrop-blur-xl border-white/80 shadow-[0_12px_32px_rgba(20,20,31,0.08)] max-w-3xl w-full"
@@ -83,7 +80,7 @@ export default function Navbar() {
               {mobileMenuOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
             </button>
           </div>
-        </motion.nav>
+        </nav>
       </header>
 
       {/* Mobile Drawer Menu */}

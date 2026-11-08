@@ -4,22 +4,25 @@ import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function IntroLoader() {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Check if session has already seen loader
-    const hasSeenLoader = sessionStorage.getItem("laurentin_loader_seen");
-    if (hasSeenLoader) {
-      setLoading(false);
+    // Skip if query param ?no-loader is present
+    if (typeof window !== "undefined" && window.location.search.includes("no-loader")) {
       return;
     }
 
-    const timer = setTimeout(() => {
-      setLoading(false);
-      sessionStorage.setItem("laurentin_loader_seen", "true");
-    }, 1300);
+    // Only show on first visit in session
+    const hasSeenLoader = sessionStorage.getItem("laurentin_loader_seen");
+    if (!hasSeenLoader) {
+      setLoading(true);
+      const timer = setTimeout(() => {
+        setLoading(false);
+        sessionStorage.setItem("laurentin_loader_seen", "true");
+      }, 1200);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   return (
